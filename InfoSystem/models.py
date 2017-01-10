@@ -4,7 +4,19 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+
+class Parent(models.Model):
+    par_id_from_user = models.OneToOneField(User, null=True)
+    name = models.CharField(max_length=128)
+    mobile = models.CharField(max_length=15)
+    email = models.CharField(max_length=128, null=True)
+
+    # def __unicode__(self):
+    #     return self.name
+
+
 class Student(models.Model):
+    parent_id = models.ForeignKey(Parent)
     name = models.CharField(max_length=128)
     hall_ticket = models.CharField(max_length=10)
     gender = models.CharField(max_length=6)
@@ -16,16 +28,6 @@ class Student(models.Model):
 
     def __unicode__(self):
         return self.roll_no
-
-
-class Parent(models.Model):
-    par_id_from_user = models.OneToOneField(User, null=True)
-    name = models.CharField(max_length=128)
-    mobile = models.CharField(max_length=15)
-    email = models.CharField(max_length=128, null=True)
-
-    def __unicode__(self):
-        return self.name
 
 
 class Subject(models.Model):
