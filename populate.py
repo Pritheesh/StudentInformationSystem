@@ -1,6 +1,6 @@
 import MySQLdb
 import xlrd
-from InfoSystem.models import Parent
+from InfoSystem.models import Parent, Student
 from MajorProject1 import settings
 
 import os
@@ -20,8 +20,6 @@ sheet = book.sheet_by_name("IT")
 
 
 query1 = """insert into InfoSystem_parent (name, mobile) VALUES (%s, %s)"""
-query2 = """insert into Infosystem_student (name, hall_ticket, gender, mother_name, father_name, student_mobile,
-email, parent_mobile, parent_id_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %d)"""
 
 for row in range(5, sheet.nrows):
     father_name = sheet.cell(row, 9).value
@@ -40,13 +38,11 @@ for row in range(5, sheet.nrows):
     gender = str(int(sheet.cell(row, 8).value)).strip()
     mother_name = sheet.cell(row, 10).value.strip()
     student_mobile = str(int(sheet.cell(row, 12).value)).strip()
-    email = sheet.cell(row, 13).value.strip()
-    object = Parent.objects.get(name=father_name)
-    values2 = (name, hall_ticket, gender, mother_name, father_name, student_mobile, email, father_mobile, int(object.id))
-    # print values2
+    email = str(sheet.cell(row, 13).value).strip()
+    object = Parent.objects.filter(mobile=father_mobile)[0]
+    stud = Student(name=name, hall_ticket=hall_ticket, gender=gender, mother_name=mother_name, father_name=father_name,
+                   student_mobile=student_mobile, email=email, parent_mobile=father_mobile, parent_id=object)
+    stud.save()
 
-    print query2 % values2
-    cursor.execute(query2, values2)
-
-db.commit()
 db.close()
+
