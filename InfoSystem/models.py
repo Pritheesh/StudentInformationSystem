@@ -18,7 +18,7 @@ class Parent(models.Model):
 class Student(models.Model):
     parent_id = models.ForeignKey(Parent)
     name = models.CharField(max_length=128)
-    hall_ticket = models.CharField(max_length=10)
+    hall_ticket = models.CharField(max_length=10, unique=True)
     gender = models.CharField(max_length=6)
     mother_name = models.CharField(max_length=128)
     father_name = models.CharField(max_length=128)
@@ -31,10 +31,10 @@ class Student(models.Model):
 
 
 class Subject(models.Model):
-    subject_code = models.CharField(max_length=10)
+    subject_code = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=128)
-    max_internal_marks = models.IntegerField()
-    max_external_marks = models.IntegerField()
+    max_internal_marks = models.IntegerField(null=True)
+    max_external_marks = models.IntegerField(null=True)
 
     def __unicode__(self):
         return self.name
@@ -43,7 +43,7 @@ class Subject(models.Model):
 class Result(models.Model):
     hall_ticket = models.ForeignKey(Student)
     subject_code = models.ForeignKey(Subject)
-    internal_marks = models.IntegerField()
-    external_marks = models.IntegerField()
+    internal_marks = models.CharField(max_length=3)
+    external_marks = models.CharField(max_length=3)
     results = models.CharField(max_length=5)
     credits = models.IntegerField()
