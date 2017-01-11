@@ -22,9 +22,9 @@ class Student(models.Model):
     gender = models.CharField(max_length=6)
     mother_name = models.CharField(max_length=128)
     father_name = models.CharField(max_length=128)
-    student_mobile = models.CharField(max_length=15)
-    email = models.CharField(max_length=128)
-    parent_mobile = models.CharField(max_length=15)
+    student_mobile = models.CharField(max_length=15, null=True)
+    email = models.CharField(max_length=128, null=True)
+    parent_mobile = models.CharField(max_length=15, null=True)
 
     def __unicode__(self):
         return self.roll_no

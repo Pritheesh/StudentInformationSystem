@@ -52,8 +52,8 @@ for i in range(0, 6):
             stud = Student(name=name, hall_ticket=hall_ticket, gender=gender, mother_name=mother_name, father_name=father_name,
                            student_mobile=student_mobile, email=email, parent_mobile=father_mobile, parent_id=object)
             stud.save()
-        except:
-            pass
+        except StandardError as e:
+            print e
 
 book = xlrd.open_workbook("results.xls")
 sheet = book.sheet_by_name("TSheet")
