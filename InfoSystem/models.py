@@ -6,17 +6,17 @@ from django.db import models
 # Create your models here.
 
 class Parent(models.Model):
-    par_id_from_user = models.OneToOneField(User, null=True)
+    user = models.OneToOneField(User, null=True)
     name = models.CharField(max_length=128)
     mobile = models.CharField(max_length=15)
     email = models.CharField(max_length=128, null=True)
 
-    # def __unicode__(self):
-    #     return self.name
+    def __unicode__(self):
+        return self.name
 
 
 class Student(models.Model):
-    parent_id = models.ForeignKey(Parent)
+    parent = models.ForeignKey(Parent)
     name = models.CharField(max_length=128)
     hall_ticket = models.CharField(max_length=10, unique=True)
     gender = models.CharField(max_length=6)
@@ -27,7 +27,7 @@ class Student(models.Model):
     parent_mobile = models.CharField(max_length=15, null=True)
 
     def __unicode__(self):
-        return self.roll_no
+        return self.hall_ticket
 
 
 class Subject(models.Model):
@@ -41,9 +41,12 @@ class Subject(models.Model):
 
 
 class Result(models.Model):
-    hall_ticket = models.ForeignKey(Student)
-    subject_code = models.ForeignKey(Subject)
+    student = models.ForeignKey(Student)
+    subject = models.ForeignKey(Subject)
     internal_marks = models.CharField(max_length=3)
     external_marks = models.CharField(max_length=3)
     results = models.CharField(max_length=5)
     credits = models.IntegerField()
+
+    def __unicode__(self):
+        return self.subject.name

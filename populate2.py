@@ -64,7 +64,7 @@ for i in range(0, 7):
         object = Parent.objects.filter(mobile=father_mobile)[0]
         stud = Student(name=name, hall_ticket=hall_ticket, gender=gender, mother_name=mother_name,
                        father_name=father_name, student_mobile=student_mobile, email=email, parent_mobile=father_mobile,
-                       parent_id=object)
+                       parent=object)
         stud.save()
 
 book = xlrd.open_workbook("results.xls")
@@ -97,7 +97,7 @@ for row in range(4, sheet.nrows):
         sub_code = str(sheet.cell(row, 2).value).strip()
         sub = Subject.objects.get(subject_code=sub_code)
 
-        result = Result(hall_ticket=stud, subject_code=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
+        result = Result(student=stud, subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
                         credits=credits)
         result.save()
     except:
