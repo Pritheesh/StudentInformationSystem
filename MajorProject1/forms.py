@@ -1,10 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Parent
-
-class NameForm(forms.Form):
-    name = forms.CharField(label="Your Roll Num", max_length=128)
+from InfoSystem.models import Parent
 
 class ParentRegistrationForm(UserCreationForm):
     class Meta:
@@ -25,6 +22,7 @@ class ParentRegistrationForm(UserCreationForm):
             par = Parent.objects.get(mobile=self.cleaned_data['mobile'])
             par.email = user.email
             par.user = user
+            par.save()
             return user
         except:
             pass
