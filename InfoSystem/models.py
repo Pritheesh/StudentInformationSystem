@@ -8,7 +8,7 @@ from django.db import models
 class Parent(models.Model):
     user = models.OneToOneField(User, null=True)
     name = models.CharField(max_length=128)
-    mobile = models.CharField(max_length=15)
+    mobile = models.CharField(max_length=15, unique=True)
     email = models.CharField(max_length=128, null=True)
 
     def __unicode__(self):

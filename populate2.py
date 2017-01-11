@@ -31,8 +31,11 @@ for i in range(0, 7):
         except:
             father_mobile = None
         print "Father: ", father_name
-        par = Parent(name=father_name, mobile=father_mobile)
-        par.save()
+        try:
+            par = Parent(name=father_name, mobile=father_mobile)
+            par.save()
+        except:
+            pass
 
 db.commit()
 for i in range(0, 7):

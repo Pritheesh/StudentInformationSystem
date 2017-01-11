@@ -5,7 +5,7 @@
     <link href="{% static "InfoSystem/bootstrap.css" %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-{#<h1>User Login</h1>#}
+<h1>User Login</h1>
 {#{% if form.errors %}#}
 {#<p>Your username and password didn't match!#}
 {#Please try again!</p>#}
@@ -17,24 +17,24 @@
 {#<input type="hidden" name="next" value="/app/view" />#}
 {#<input type="submit" value="login" />#}
 {#</form>#}
-<form class="form-horizontal" style="width: 25%;margin-left: auto;margin-right: auto" method="post">
+<form class="form-horizontal" style="width: 25%;margin-left: auto;margin-right: auto" method="post" action=".">
     {% csrf_token %}
   <fieldset>
     <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Login</legend>
         <div class="form-group">
           <label for="id_username" class="col-lg-2 control-label">Username: </label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="id_username" placeholder="User Name" required>
+            <input type="text" class="form-control" id="id_username" name="username" placeholder="User Name" required>
           </div>
         </div>
       <div class="form-group">
       <label for="id_password" class="col-lg-2 control-label">Password: </label>
       <div class="col-lg-10">
-        <input type="password" class="form-control" id="id_password" placeholder="Password" required>
+        <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
       </div>
     </div>
       <div class="col-lg-10 col-lg-offset-2">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <input type="submit" class="btn btn-primary" value="Login"/>
         <button type="reset" class="btn btn-default">Cancel</button>
           <input type="hidden" name="next" value="/app/view" />
       </div>

@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.decorators.csrf import csrf_exempt
+
 from MajorProject1.views import register_user
 from django.contrib.auth import views as auth_views
 
@@ -23,6 +25,6 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^app/', include('InfoSystem.urls')),
     url(r'^register/$', register_user),
-    url(r'^login/$', auth_views.login),
+    url(r'^login/$', csrf_exempt(auth_views.login)),
     url(r'^logout/$', auth_views.logout)
 ]

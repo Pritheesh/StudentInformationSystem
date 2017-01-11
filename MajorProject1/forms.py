@@ -19,10 +19,10 @@ class ParentRegistrationForm(UserCreationForm):
         try:
             par = Parent.objects.get(mobile=self.cleaned_data['mobile'])
             par.email = user.email
-            par.user = user
-            par.save()
             if commit:
                 user.save()
+                par.user = user
+                par.save()
             return user
-        except:
-            pass
+        except Exception as e:
+            print str(e)
