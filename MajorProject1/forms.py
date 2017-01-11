@@ -16,13 +16,13 @@ class ParentRegistrationForm(UserCreationForm):
         user = super(ParentRegistrationForm, self).save(commit=False)
         user.name = self.cleaned_data['name']
         user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
         try:
             par = Parent.objects.get(mobile=self.cleaned_data['mobile'])
             par.email = user.email
             par.user = user
             par.save()
+            if commit:
+                user.save()
             return user
         except:
             pass
