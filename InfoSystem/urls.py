@@ -1,7 +1,9 @@
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 
-from InfoSystem.views import StudentListView
+from InfoSystem import views
 
 urlpatterns = [
-    url(r'^view/$', StudentListView.as_view(), name='student-list'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.login_user, name='login')
 ]

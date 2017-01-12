@@ -7,55 +7,56 @@
     <link href="{% static "InfoSystem/bootstrap.css" %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-{#    <form class="form-horizontal" style="width: 40%;margin-left: auto;margin-right: auto" method="post">#}
-{#    {% csrf_token %}#}
-{#    {{ form.as_p }}#}
-{#    <input type="submit" value="Submit" />#}
-{#</form>#}
-{#</body>#}
-{#</html>#}
+{#<h3>Register an Account</h3>#}
 
 <form class="form-horizontal" style="width: 40%;margin-left: auto;margin-right: auto" method="post">
     {% csrf_token %}
   <fieldset>
     <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Sign Up</legend>
+{#      {% for field in form %}#}
+{#        <div class="form-group">#}
+{#            <div class="col-sm-offset-2 col-sm-10">#}
+{#                <span class="text-danger small">{{ field.errors }}</span>#}
+{#                {{ form.username.name }}#}
+{#            </div>#}
+{#            <label class="col-lg-2 control-label" >{{ field.label_tag }}</label>#}
+{#            <div class="col-lg-10">{{ field }}</div>#}
+{#        </div>#}
+{#      {% endfor %}#}
         <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.username.errors }}</span>
+            </div>
           <label for="id_username" class="col-lg-2 control-label">Username: </label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="id_username" placeholder="User Name" name="username" required>
-              <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+            <input type="text" class="form-control" id="id_username" name="username" placeholder="User Name" required>
           </div>
         </div>
-    <div class="form-group">
-      <label for="id_email" class="col-lg-2 control-label">Email: </label>
-      <div class="col-lg-10">
-        <input type="email" class="form-control" id="id_email" name="email" placeholder="Email" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="id_password1" class="col-lg-2 control-label">Password: </label>
-      <div class="col-lg-10">
-        <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Password" required>
-      </div>
-    </div>
-      <div class="form-group">
-      <label for="id_password2" class="col-lg-2 control-label">Re-enter Password: </label>
-      <div class="col-lg-10">
-        <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Password" required>
-          <span class="helptext">Enter the same password as before, for verification.</span>
-      </div>
-    </div>
-      <div class="form-group">
-          <label for="id_name" class="col-lg-2 control-label">Name: </label>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.email.errors }}</span>
+            </div>
+        <label for="id_email" class="col-lg-2 control-label">Email: </label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="id_name" name="name" placeholder="Enter your Name" required>
-              <span class="helptext">Enter the name given in the application form</span>
+            <input type="text" class="form-control" id="id_email" name="email" placeholder="E-mail" required>
           </div>
         </div>
-      <div class="form-group">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.mobile.errors }}</span>
+            </div>
           <label for="id_mobile" class="col-lg-2 control-label">Mobile: </label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="id_mobile" name="mobile" placeholder="Mobile" required>
+            <input type="text" class="form-control" id="id_mobile" name="mobile" placeholder="Mobile number" required>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.password.errors }}</span>
+            </div>
+          <label for="id_password" class="col-lg-2 control-label">Password: </label>
+          <div class="col-lg-10">
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
           </div>
         </div>
 
@@ -64,6 +65,13 @@
         <input type="submit" class="btn btn-primary" value="Submit"/>
       </div>
     </div>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+  <div>
+      Already have an account? <a href="{% url 'login' %}">Click here</a> to log in.
+  </div>
+
   </fieldset>
 </form>
 </body>

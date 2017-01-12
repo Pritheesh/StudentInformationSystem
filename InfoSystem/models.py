@@ -10,6 +10,7 @@ class Parent(models.Model):
     name = models.CharField(max_length=128)
     mobile = models.CharField(max_length=15, unique=True)
     email = models.CharField(max_length=128, null=True)
+    is_registered = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
