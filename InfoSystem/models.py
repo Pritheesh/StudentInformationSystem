@@ -7,7 +7,8 @@ from django.db import models
 
 class Parent(models.Model):
     user = models.OneToOneField(User, null=True)
-    name = models.CharField(max_length=128)
+    mother_name = models.CharField(max_length=128)
+    father_name = models.CharField(max_length=128)
     mobile = models.CharField(max_length=15, unique=True)
     email = models.CharField(max_length=128, null=True)
     is_registered = models.BooleanField(default=False)
@@ -21,11 +22,8 @@ class Student(models.Model):
     name = models.CharField(max_length=128)
     hall_ticket = models.CharField(max_length=10, unique=True)
     gender = models.CharField(max_length=6)
-    mother_name = models.CharField(max_length=128)
-    father_name = models.CharField(max_length=128)
-    student_mobile = models.CharField(max_length=15, null=True)
+    mobile = models.CharField(max_length=15, null=True)
     email = models.CharField(max_length=128, null=True)
-    parent_mobile = models.CharField(max_length=15, null=True)
 
     def __unicode__(self):
         return self.hall_ticket

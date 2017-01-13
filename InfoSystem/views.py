@@ -2,7 +2,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import logout
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls.base import reverse
 from django.views.generic.base import View
 
 from InfoSystem.forms import UserForm
@@ -19,7 +21,7 @@ def register(request):
         password = form.cleaned_data['password']
         mobile = form.cleaned_data['mobile']
         email = form.cleaned_data['email']
-        user.set_passwordccc(password)
+        user.set_password(password)
         par = Parent.objects.get(mobile__exact=mobile)
         if(par.is_registered ==  False):
             user.save()
@@ -39,6 +41,8 @@ def register(request):
     return render(request, template_name, {'form': form})
 
 def login_user(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('result-view'))
     template_name = 'registration/login.html'
     if request.method=='POST':
         username = request.POST['username']
