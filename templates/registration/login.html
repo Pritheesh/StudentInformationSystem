@@ -5,34 +5,36 @@
     <link href="{% static "InfoSystem/bootstrap.css" %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form class="form-horizontal" style="width: 45%;margin-left: auto;margin-right: auto" method="post" action=".">
+<form class="form-horizontal" style="width: 40%;margin-left: auto;margin-right: auto" method="post" action=".">
     {% csrf_token %}
-  <fieldset>
-    <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Login</legend>
-      <div class="col-lg-10 col-lg-offset-2">
+    <fieldset>
+        <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Login</legend>
+        <div class="col-lg-10 col-lg-offset-2">
             {% if error_message %}
                 <p><strong>{{ error_message }}</strong></p>
             {% endif %}
-      </div>
-        <div class="form-group">
-          <label for="id_username" class="col-lg-2 control-label">Username: </label>
-          <div class="col-lg-10">
-            <input type="text" class="form-control" id="id_username" name="username" placeholder="User Name" required>
-          </div>
         </div>
-      <div class="form-group">
-      <label for="id_password" class="col-lg-2 control-label">Password: </label>
-      <div class="col-lg-10">
-        <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
-      </div>
-    </div>
-      <div class="col-lg-10 col-lg-offset-2">
-        <input type="submit" class="btn btn-primary" value="Login"/>
-          <div class="panel-footer">
-              Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
-          </div>
-      </div>
-  </fieldset>
+        <div class="form-group">
+            <label for="id_username" class="col-lg-2 control-label">Username: </label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="id_username" name="username" placeholder="User Name"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_password" class="col-lg-2 control-label">Password: </label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="id_password" name="password" placeholder="Password"
+                       required>
+            </div>
+        </div>
+        <div class="col-lg-10 col-lg-offset-2">
+            <input type="submit" class="btn btn-primary" value="Login"/>
+            <div class="panel-footer">
+                Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
+            </div>
+        </div>
+    </fieldset>
 </form>
 </body>
 </html>

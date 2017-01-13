@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.views import logout
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 
 from InfoSystem.forms import UserForm
-from InfoSystem.models import Parent
+from InfoSystem.models import Parent, Student, Result, Subject
 
 
 def register(request):
@@ -15,12 +18,15 @@ def register(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         mobile = form.cleaned_data['mobile']
-        user.set_password(password)
+        email = form.cleaned_data['email']
+        user.set_passwordccc(password)
         par = Parent.objects.get(mobile__exact=mobile)
         if(par.is_registered ==  False):
             user.save()
             par.is_registered == True
             par.user = user
+            par.email = email
+            par.save()
         else:
             return render(request, template_name, {'error_message': 'You are already registered', 'form':form})
         user = authenticate(username=username, password=password)
@@ -41,10 +47,26 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('register')
+                return redirect('result-view')
             else:
                 return render(request, template_name, {'error_message': 'Your account has been disabled'})
         else:
             return render(request, template_name, {'error_message': 'Wrong Username/Password. Try again'})
 
     return render(request, template_name)
+
+@login_required
+def result_view(request):
+    template_name = 'result-view.html'
+    par = Parent.objects.get(user_id=request.user.id)
+    students = par.student_set.all()
+    results = []
+    for student in students:
+        results.append(student.result_set.all())
+
+
+    return render(request, template_name, {'results': results})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

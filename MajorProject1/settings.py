@@ -88,7 +88,7 @@ DATABASES = {
     }
 }
 
-LOGIN_REDIRECT_URL=reverse_lazy('display')
+LOGIN_REDIRECT_URL=reverse_lazy('result-view')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
