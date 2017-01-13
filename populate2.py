@@ -12,14 +12,9 @@ django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
 
-db = MySQLdb.connect("localhost", "root", "1961", "infotestdb")
-cursor = db.cursor()
-
 #populate parent table
 # Open the workbook and define the worksheet
 book = xlrd.open_workbook("info.xls")
-
-query1 = """insert into InfoSystem_parent (name, mobile) VALUES (%s, %s)"""
 
 
 for i in range(0, 7):
@@ -37,7 +32,7 @@ for i in range(0, 7):
         except:
             pass
 
-db.commit()
+#populate student table
 for i in range(0, 7):
     sheet = book.sheet_by_index(i)
     for row in range(5, sheet.nrows):
@@ -70,6 +65,8 @@ for i in range(0, 7):
                        parent=object)
         stud.save()
 
+
+#populate subject table
 book = xlrd.open_workbook("results.xls")
 sheet = book.sheet_by_name("TSheet")
 
@@ -81,6 +78,8 @@ for row in range(4, sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
+
+#populate result table
 for row in range(4, sheet.nrows):
     try:
         int_marks = str(int(sheet.cell(row, 4).value))
