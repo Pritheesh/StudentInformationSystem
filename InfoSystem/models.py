@@ -20,6 +20,14 @@ class Parent(models.Model):
         return self.name
 
 
+class Branch(models.model):
+    code = models.CharField(max_length=2)
+    name = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Student(models.Model):
     user = models.OneToOneField(CustomUser, null=True)
     parent = models.ForeignKey(Parent)
@@ -28,10 +36,22 @@ class Student(models.Model):
     gender = models.CharField(max_length=6)
     mobile = models.CharField(max_length=15, null=True)
     email = models.CharField(max_length=128, null=True)
+    branch = models.ForeignKey(Branch)
     is_registered = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.hall_ticket
+
+
+class Faculty(models.Model):
+    user = models.OneToOneField(CustomUser, null=True)
+    name = models.CharField(max_length=128)
+    roll_no = models.CharField(max_length=10, unique=True)
+    gender = models.CharField(max_length=6)
+    mobile = models.CharField(max_length=15)
+    email = models.CharField(max_length=128, null=True)
+    branch = models.ForeignKey(Branch)
+    is_registered = models.BooleanField(default=False)
 
 
 class Subject(models.Model):
