@@ -20,13 +20,13 @@ book = xlrd.open_workbook("info.xls")
 for i in range(0, 7):
     sheet = book.sheet_by_index(i)
     for row in range(5, sheet.nrows):
-        father_name = str(sheet.cell(row, 9).value).strip()
+        father_name = str(sheet.cell(row, 9).value).strip().title()
         try:
             father_mobile = str(int(sheet.cell(row, 11).value)).strip()
         except:
             father_mobile = None
         print "Father: ", father_name
-        mother_name = str(sheet.cell(row, 10).value).strip()
+        mother_name = str(sheet.cell(row, 10).value).strip().title()
         try:
             par = Parent(father_name=father_name, mobile=father_mobile, mother_name=mother_name)
             par.save()
@@ -43,7 +43,7 @@ for i in range(0, 7):
             father_mobile=None
         hall_ticket = str(sheet.cell(row, 1).value).strip()
         print hall_ticket
-        name = str(sheet.cell(row, 2).value).strip()
+        name = str(sheet.cell(row, 2).value).strip().title()
         # print "student: ", name
         try:
             gender = int(sheet.cell(row, 8).value)

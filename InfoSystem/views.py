@@ -1,14 +1,15 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.views import logout
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls.base import reverse
-from django.views.generic.base import View
 
 from InfoSystem.forms import UserForm
-from InfoSystem.models import Parent, Student, Result, Subject
+from InfoSystem.models import Parent
+
+def index(request):
+    return render(request, 'index.html')
 
 
 def register(request):
@@ -23,9 +24,9 @@ def register(request):
         email = form.cleaned_data['email']
         user.set_password(password)
         par = Parent.objects.get(mobile__exact=mobile)
-        if(par.is_registered ==  False):
+        if(par.is_registered == False):
             user.save()
-            par.is_registered == True
+            par.is_registered =  True
             par.user = user
             par.email = email
             par.save()
@@ -39,6 +40,7 @@ def register(request):
                 return redirect('login')
 
     return render(request, template_name, {'form': form})
+
 
 def login_user(request):
     if request.user.is_authenticated():
@@ -59,17 +61,14 @@ def login_user(request):
 
     return render(request, template_name)
 
+
 @login_required
 def result_view(request):
     template_name = 'result-view.html'
     par = Parent.objects.get(user_id=request.user.id)
     students = par.student_set.all()
-    results = []
-    for student in students:
-        results.append(student.result_set.all())
+    return render(request, template_name, {'students': students})
 
-
-    return render(request, template_name, {'results': results})
 
 def logout_view(request):
     logout(request)

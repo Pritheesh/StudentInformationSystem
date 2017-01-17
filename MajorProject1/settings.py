@@ -40,7 +40,28 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'InfoSystem',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_registration': 'InfoSystem.serializers.ParentRegisterSerializer',
+    },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,6 +108,8 @@ DATABASES = {
         'PORT': '3306'
     }
 }
+
+AUTH_USER_MODEL = 'InfoSystem.CustomUser'
 
 LOGIN_REDIRECT_URL=reverse_lazy('result-view')
 
