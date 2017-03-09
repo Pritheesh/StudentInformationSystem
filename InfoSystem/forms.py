@@ -1,6 +1,7 @@
 from django import forms
 import re
 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
 
@@ -40,7 +41,7 @@ class UserRegistrationForm(forms.Form):
             validate_email(email)
             return email
         except:
-            return forms.ValidationError("Enter correct Email")
+            raise forms.ValidationError("Enter correct Email")
 
     def clean_mobile(self):
         mobile = self.cleaned_data['mobile']
@@ -52,17 +53,17 @@ class UserRegistrationForm(forms.Form):
             try:
                 stud = Student.objects.get(mobile=mobile)
                 if stud.is_registered is True:
-                    return forms.ValidationError("Student with given mobile number already exists")
+                    raise forms.ValidationError("Student with given mobile number already exists")
             except:
-                return forms.ValidationError("User with given mobile number doesn't exist")
+                raise forms.ValidationError("User with given mobile number doesn't exist")
             return mobile
         else:
             try:
                 par = Parent.objects.get(mobile=mobile)
                 if par.is_registered is True:
-                    return forms.ValidationError("Parent with given mobile number already exists")
+                    raise forms.ValidationError("Parent with given mobile number already exists")
             except:
-                return forms.ValidationError("User with given mobile number doesn't exist")
+                raise forms.ValidationError("User with given mobile number doesn't exist")
             return mobile
 
 
@@ -79,3 +80,12 @@ class UserRegistrationForm(forms.Form):
     #     self.clean_mobile()
     #     self.clean_email()
     #     self.clean_username()
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(max_length=30)
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    def clean(self):
+        user = authenticate(username = self.cleaned_data['username'], password=self.cleaned_data['password'])
+        if user is None:
+            raise forms.ValidationError("Invalid username or password. Please try again!")

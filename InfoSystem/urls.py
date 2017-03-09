@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import views as auth_views
 from InfoSystem import api_views
 from InfoSystem import serializers_views as s_views
 from InfoSystem import views
@@ -18,6 +18,6 @@ urlpatterns = [
 
 
     url(r'^results/$', api_views.result_view, name='result-view'),
-    url(r'^login/$', views.login, name='login'),
+    url(r'^login/$', auth_views.login, name='login'),
     url(r'^register/$', views.register, name='register'),
 ]
