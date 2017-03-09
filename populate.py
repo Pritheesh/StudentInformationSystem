@@ -2,7 +2,7 @@ from _mysql import IntegrityError
 
 import MySQLdb
 import xlrd
-from InfoSystem.models import Parent, Student, Subject, Result
+from InfoSystem.models import Parent, Student, Subject, Result, ExamInfo, Branch
 from MajorProject1 import settings
 
 import os
@@ -11,6 +11,22 @@ import django
 django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
+
+#populating branch table
+branch = Branch(code='01', name='Civil Engineering')
+branch.save()
+branch = Branch(code='02', name='Electrical and Electronic Engineering')
+branch.save()
+branch = Branch(code='03', name='Mechanical Engineering')
+branch.save()
+branch = Branch(code='04', name='Electronic and Communication Engineering')
+branch.save()
+branch = Branch(code='05', name='Computer Science Engineering')
+branch.save()
+branch = Branch(code='10', name='Electronic and Instrumentation Engineering')
+branch.save()
+branch = Branch(code='12', name='Information Technology')
+branch.save()
 
 #populate parent table
 # Open the workbook and define the worksheet
@@ -57,10 +73,11 @@ for i in range(0, 7):
             student_mobile = str(int(sheet.cell(row, 12).value)).strip()
         except:
             student_mobile = 0
+        branch = Branch.objects.get(code__exact=hall_ticket[6:8])
         email = str(sheet.cell(row, 13).value).strip()
         object = Parent.objects.filter(mobile=father_mobile)[0]
         stud = Student(name=name, hall_ticket=hall_ticket, gender=gender, mobile=student_mobile, email=email,
-                       parent=object)
+                       parent=object, branch=branch)
         stud.save()
 
 
@@ -76,6 +93,10 @@ for row in range(4, sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
+
+#populate ExamInfo table
+exam_object = ExamInfo(year_of_calendar=2016, month_of_year=4, year_of_pursue=3, semester=2, supple=False)
+exam_object.save()
 
 #populate result table
 for row in range(4, sheet.nrows):
@@ -96,9 +117,9 @@ for row in range(4, sheet.nrows):
         stud = Student.objects.get(hall_ticket=hall_ticket)
         sub_code = str(sheet.cell(row, 2).value).strip()
         sub = Subject.objects.get(subject_code=sub_code)
-
+        exam_object = ExamInfo.objects.get(year_of_calendar=2016)
         result = Result(student=stud, subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                        credits=credits)
+                        credits=credits, examinfo=exam_object)
         result.save()
     except:
         pass

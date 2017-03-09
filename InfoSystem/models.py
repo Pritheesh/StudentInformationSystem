@@ -20,7 +20,7 @@ class Parent(models.Model):
         return self.name
 
 
-class Branch(models.model):
+class Branch(models.Model):
     code = models.CharField(max_length=2)
     name = models.CharField(max_length=64)
 
@@ -31,27 +31,27 @@ class Branch(models.model):
 class Student(models.Model):
     user = models.OneToOneField(CustomUser, null=True)
     parent = models.ForeignKey(Parent)
+    branch = models.ForeignKey(Branch)
     name = models.CharField(max_length=128)
     hall_ticket = models.CharField(max_length=10, unique=True)
     gender = models.CharField(max_length=6)
     mobile = models.CharField(max_length=15, null=True)
     email = models.CharField(max_length=128, null=True)
-    branch = models.ForeignKey(Branch)
     is_registered = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.hall_ticket
 
 
-class Faculty(models.Model):
-    user = models.OneToOneField(CustomUser, null=True)
-    name = models.CharField(max_length=128)
-    roll_no = models.CharField(max_length=10, unique=True)
-    gender = models.CharField(max_length=6)
-    mobile = models.CharField(max_length=15)
-    email = models.CharField(max_length=128, null=True)
-    branch = models.ForeignKey(Branch)
-    is_registered = models.BooleanField(default=False)
+# class Faculty(models.Model):
+#     user = models.OneToOneField(CustomUser, null=True)
+#     name = models.CharField(max_length=128)
+#     roll_no = models.CharField(max_length=10, unique=True)
+#     gender = models.CharField(max_length=6)
+#     mobile = models.CharField(max_length=15)
+#     email = models.CharField(max_length=128, null=True)
+#     branch = models.ForeignKey(Branch)
+#     is_registered = models.BooleanField(default=False)
 
 
 class Subject(models.Model):
@@ -63,10 +63,20 @@ class Subject(models.Model):
     def __unicode__(self):
         return self.name
 
+class ExamInfo(models.Model):
+    year_of_pursue = models.IntegerField()
+    semester = models.IntegerField()
+    year_of_calendar = models.IntegerField()
+    month_of_year = models.IntegerField()
+    supple = models.BooleanField()
+
+    def __unicode__(self):
+        return self.year_of_pursue
 
 class Result(models.Model):
     student = models.ForeignKey(Student, related_name='stud_results')
     subject = models.ForeignKey(Subject, related_name='subjects')
+    examinfo = models.ForeignKey(ExamInfo, related_name='examinfo')
     internal_marks = models.CharField(max_length=3)
     external_marks = models.CharField(max_length=3)
     results = models.CharField(max_length=5)
