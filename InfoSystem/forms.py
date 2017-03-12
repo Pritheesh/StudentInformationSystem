@@ -21,7 +21,7 @@ class UserRegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
     email = forms.EmailField()
     mobile = forms.CharField(max_length=15)
-    isstudent = forms.BooleanField()
+    isstudent = forms.NullBooleanField(required=False)
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
 
@@ -45,25 +45,25 @@ class UserRegistrationForm(forms.Form):
 
     def clean_mobile(self):
         mobile = self.cleaned_data['mobile']
-        if 'isstudent' in self.cleaned_data:
-            is_student = True
-        else:
-            is_student = False
-        if is_student is True:
+        if 'isstudent' in self.data:
+        #     is_student = True
+        # else:
+        #     is_student = False
+        # if is_student is True:
             try:
                 stud = Student.objects.get(mobile=mobile)
-                if stud.is_registered is True:
-                    raise forms.ValidationError("Student with given mobile number already exists")
             except:
                 raise forms.ValidationError("User with given mobile number doesn't exist")
+            if stud.is_registered is True:
+                raise forms.ValidationError("Student with given mobile number already exists")
             return mobile
         else:
             try:
                 par = Parent.objects.get(mobile=mobile)
-                if par.is_registered is True:
-                    raise forms.ValidationError("Parent with given mobile number already exists")
             except:
                 raise forms.ValidationError("User with given mobile number doesn't exist")
+            if par.is_registered is True:
+                raise forms.ValidationError("Parent with given mobile number already exists")
             return mobile
 
 

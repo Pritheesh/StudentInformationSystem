@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Get Lost</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
-    <p> Hello There</p>
+<p> Hello There</p>
+Welcome {{ user.username }}
+<h3>Your details</h3>
+Name: {{ students.0.name }}
+Roll No: {{ students.0.hall_ticket }}
+
+<table border="1">
+    <tr>
+        <th>#</th>
+        <th>Subject</th>
+        <th>Internal Exams</th>
+        <th>External Exams</th>
+        <th>Total</th>
+        <th>Result</th>
+        <th>Credits</th>
+    </tr>
+    {% for result in students.0.stud_results.all %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ result.subject }}</td>
+            <td>{{ result.internal_marks }}</td>
+            <td>{{ result.external_marks }}</td>
+            <td>{{ result.internal_marks|add:result.external_marks }}</td>
+            <td>{{ result.results }}</td>
+            <td>{{ result.credits }}</td>
+        </tr>
+    {% endfor %}
+</table>
 </body>
 </html>

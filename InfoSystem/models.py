@@ -17,7 +17,7 @@ class Parent(models.Model):
     is_registered = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.name
+        return self.father_name
 
 
 class Branch(models.Model):
@@ -71,7 +71,7 @@ class ExamInfo(models.Model):
     supple = models.BooleanField()
 
     def __unicode__(self):
-        return self.year_of_pursue
+        return str(self.year_of_pursue)
 
 class Result(models.Model):
     student = models.ForeignKey(Student, related_name='stud_results')

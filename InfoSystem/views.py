@@ -1,13 +1,15 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 from django.template.context_processors import csrf
 from django.urls.base import reverse
 
 from InfoSystem.forms import UserRegistrationForm, UserLoginForm
 from InfoSystem.models import CustomUser, Student, Parent
+from MajorProject1 import settings
 
 
 def register(request):
@@ -16,7 +18,10 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
-            is_student = form.cleaned_data['isstudent']
+            if form.data['isstudent'] == 'on':
+                is_student = True
+            else:
+                is_student = False
             mobile = form.cleaned_data['mobile']
             user = CustomUser.objects.create(username = username,
                                             email = email,
@@ -25,21 +30,25 @@ def register(request):
                                              )
             user.set_password(form.cleaned_data['password1'])
             user.save()
+            # user = authenticate(username=username, password=form.cleaned_data['password1'])
             if is_student is True:
                 stud = Student.objects.get(mobile=mobile)
                 stud.is_registered = True
                 stud.user = user
+                stud.save()
             else:
                 par = Parent.objects.get(mobile=mobile)
                 par.is_registered = True
                 par.email = email
                 par.user = user
+                par.save()
             return HttpResponseRedirect(reverse('login'))
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
 
 def login_view(request):
+    redirect_authenticated_user = True
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -51,3 +60,21 @@ def login_view(request):
     else:
         form = UserLoginForm()
     return render(request, 'registration/login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'registration/login.html')
+
+
+@login_required
+def result_view(request):
+    user = request.user
+    students = []
+    if user.is_student is True:
+        students.append(Student.objects.get(user=user))
+        return render(request, 'results_student.html', {'students': students})
+
+    par = Parent.objects.get(user=user)
+    students.append(par.student_set.all())
+    return render(request, 'results_parent.html', {'parent': par, 'students': students})

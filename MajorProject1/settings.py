@@ -113,6 +113,8 @@ AUTH_USER_MODEL = 'InfoSystem.CustomUser'
 
 LOGIN_REDIRECT_URL=reverse_lazy('result-view')
 
+LOGIN_URL = reverse_lazy('login')
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 

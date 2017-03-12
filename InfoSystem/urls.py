@@ -12,12 +12,14 @@ urlpatterns = [
     # url(r'^$', views.index, name='home'),
     url(r'^accounts/login/$', api_views.login_user, name='login'),
     url(r'^api/logout/$', api_views.logout_view, name='api-logout'),
-    url(r'^api/results/$', s_views.StudentList.as_view()),
+    # url(r'^api/results/$', s_views.StudentList.as_view()),
     url(r'^api/register/parent$', s_views.ParentRegisterView.as_view(), name='api-parent-register'),
     # url(r'^api/register/student', s_views.StudentRegisterView.as_view(), name='api-student-register'),
 
 
-    url(r'^results/$', api_views.result_view, name='result-view'),
-    url(r'^login/$', auth_views.login, name='login'),
+    # url(r'^results/$', api_views.result_view, name='result-view'),
+    url(r'^login/$', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^results/$', login_required(views.result_view), name='result-view'),
+    url(r'^logout/$', views.logout_view, name='logout'),
 ]
