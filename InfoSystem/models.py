@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     mobile = models.CharField(max_length=15)
     is_student = models.BooleanField(verbose_name="Student", default=False)
 
+
 class Parent(models.Model):
     user = models.OneToOneField(CustomUser, null=True)
     mother_name = models.CharField(max_length=128)
@@ -63,20 +64,24 @@ class Subject(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class ExamInfo(models.Model):
+    student = models.ForeignKey(Student, related_name='examinfo')
+    year_of_pursue_roman = models.CharField(max_length=5)
+    semester_roman = models.CharField(max_length=2)
     year_of_pursue = models.IntegerField()
     semester = models.IntegerField()
     year_of_calendar = models.IntegerField()
-    month_of_year = models.IntegerField()
+    month_of_year = models.CharField(max_length=15)
     supple = models.BooleanField()
 
     def __unicode__(self):
-        return str(self.year_of_pursue)
+        return self.year_of_pursue_roman+" "+self.semester_roman
+
 
 class Result(models.Model):
-    student = models.ForeignKey(Student, related_name='stud_results')
     subject = models.ForeignKey(Subject, related_name='subjects')
-    examinfo = models.ForeignKey(ExamInfo, related_name='examinfo')
+    examinfo = models.ForeignKey(ExamInfo, related_name='result')
     internal_marks = models.CharField(max_length=3)
     external_marks = models.CharField(max_length=3)
     results = models.CharField(max_length=5)

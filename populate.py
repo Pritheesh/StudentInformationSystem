@@ -4,14 +4,13 @@ import MySQLdb
 import xlrd
 from InfoSystem.models import Parent, Student, Subject, Result, ExamInfo, Branch
 from MajorProject1 import settings
-
+import sys
 import os
 import django
 
 django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
-
 #populating branch table
 branch = Branch(code='01', name='Civil Engineering')
 branch.save()
@@ -95,10 +94,13 @@ for row in range(4, sheet.nrows):
 
 
 #populate ExamInfo table
-exam_object = ExamInfo(year_of_calendar=2016, month_of_year=4, year_of_pursue=3, semester=2, supple=False)
-exam_object.save()
+# exam_object = ExamInfo(year_of_calendar=2016, month_of_year=4, year_of_pursue=3, semester=2, supple=False)
+# exam_object.save()
 
 #populate result table
+months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
+          'December']
+hall2 = ""
 for row in range(4, sheet.nrows):
     try:
         int_marks = str(int(sheet.cell(row, 4).value))
@@ -113,13 +115,24 @@ for row in range(4, sheet.nrows):
     credits = int(sheet.cell(row, 8).value)
     try:
         hall_ticket = str(sheet.cell(row, 0).value).strip()
+        hall1 = hall_ticket
+
         print hall_ticket, " in results table"
         stud = Student.objects.get(hall_ticket=hall_ticket)
+
+        if hall1 != hall2: #Populating the ExamInfo table
+            exam_object = ExamInfo(year_of_calendar=2016, month_of_year=months[3], year_of_pursue_roman='III',
+                                   semester_roman='II', year_of_pursue=3, semester=2, supple=False, student=stud)
+            exam_object.save()
+
+        hall2 = hall1
+
         sub_code = str(sheet.cell(row, 2).value).strip()
         sub = Subject.objects.get(subject_code=sub_code)
-        exam_object = ExamInfo.objects.get(year_of_calendar=2016)
-        result = Result(student=stud, subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
+        #Modify the below code accordingly
+        exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=3, semester=2)
+        result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
                         credits=credits, examinfo=exam_object)
         result.save()
     except:
-        pass
+        print sys.exc_info()

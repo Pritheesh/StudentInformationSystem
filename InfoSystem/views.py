@@ -64,7 +64,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, 'registration/login.html')
+    return redirect(reverse('login'))
 
 
 @login_required
@@ -73,7 +73,9 @@ def result_view(request):
     students = []
     if user.is_student is True:
         students.append(Student.objects.get(user=user))
-        return render(request, 'results_student.html', {'students': students})
+        exam_info = students[0].examinfo.all().filter().order_by('year_of_pursue', 'semester')
+        # num_buttons = len(examinfo)
+        return render(request, 'results_student.html', {'students': students, 'exam_info': exam_info})
 
     par = Parent.objects.get(user=user)
     students.append(par.student_set.all())
