@@ -70,8 +70,8 @@ for row in range(sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+#               'November', 'December']
 # hall2 = ""
 i=0
 for row in range(sheet.nrows):
@@ -121,8 +121,8 @@ for row in range(sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+#               'November', 'December']
 # hall2 = ""
 i=0
 for row in range(sheet.nrows):
@@ -174,8 +174,8 @@ for row in range(sheet.nrows):
         sub.save()
 
 i = 0
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+#               'November', 'December']
 # hall2 = ""
 for row in range(sheet.nrows):
     try:
@@ -225,8 +225,8 @@ for row in range(sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+#               'November', 'December']
 i=0
 # hall2 = ""
 for row in range(sheet.nrows):
@@ -275,8 +275,8 @@ for row in range(sheet.nrows):
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
+# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+#               'November', 'December']
 # hall2 = ""
 i=0
 for row in range(sheet.nrows):

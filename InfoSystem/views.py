@@ -18,8 +18,9 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
-            if form.data['isstudent'] == 'on':
-                is_student = True
+            if 'isstudent' in form.data:
+                if form.data['isstudent'] == 'on':
+                    is_student = True
             else:
                 is_student = False
             mobile = form.cleaned_data['mobile']
@@ -78,5 +79,16 @@ def result_view(request):
         return render(request, 'results_student.html', {'students': students, 'exam_info': exam_info})
 
     par = Parent.objects.get(user=user)
-    students.append(par.student_set.all())
-    return render(request, 'results_parent.html', {'parent': par, 'students': students})
+    students = par.student_set.all()
+    num = len(students)
+    exam_info = []
+    my_dict = {}
+    for student in students:
+        ei = student.examinfo.all().filter().order_by('year_of_pursue', 'semester')
+        exam_info.append(ei)
+
+    for stud, ei in zip(students, exam_info):
+        my_dict[stud] = ei
+
+    return render(request, 'results_parent.html', {'parent': par, 'students': students, 'exam_info': exam_info,
+                                                   'range': range(num), 'my_dict': my_dict})

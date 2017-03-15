@@ -78,6 +78,9 @@ class ExamInfo(models.Model):
     def __unicode__(self):
         return self.year_of_pursue_roman+" "+self.semester_roman
 
+    class Meta:
+        ordering = ['year_of_pursue', 'semester']
+
 
 class Result(models.Model):
     subject = models.ForeignKey(Subject, related_name='subjects')
