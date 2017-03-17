@@ -25,8 +25,8 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ('name', 'email', 'hall_ticket', 'stud_results')
 
 
-class ParentRegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True,  style={'input_type': 'password'})
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'mobile', 'password', 'is_student']
@@ -34,7 +34,7 @@ class ParentRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if validated_data['is_student'] is False:
             par = Parent.objects.get(mobile__exact=validated_data['mobile'])
-            user = super(ParentRegisterSerializer, self).create(validated_data)
+            user = super(UserRegisterSerializer, self).create(validated_data)
             par.user = user
             par.email = validated_data['email']
             par.is_registered=True
@@ -44,7 +44,7 @@ class ParentRegisterSerializer(serializers.ModelSerializer):
             return user
         else:
             stud = Student.objects.get(mobile__exact=validated_data['mobile'])
-            user = super(ParentRegisterSerializer, self).create(validated_data)
+            user = super(UserRegisterSerializer, self).create(validated_data)
             stud.user = user
             stud.is_registered = True
             stud.save()
@@ -54,13 +54,19 @@ class ParentRegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['is_student'] is False:
-            par = Parent.objects.get(mobile__exact=data['mobile'])
+            try:
+                par = Parent.objects.get(mobile__exact=data['mobile'])
+            except:
+                raise serializers.ValidationError("Invalid mobile number.")
             if par.is_registered:
-                raise serializers.ValidationError("You are already registered")
+                raise serializers.ValidationError("You are already registered with the given mobile number.")
         else:
-            stud = Student.objects.get(mobile__exact=data['mobile'])
+            try:
+                stud = Student.objects.get(mobile__exact=data['mobile'])
+            except:
+                raise serializers.ValidationError("Invalid mobile number.")
             if stud.is_registered:
-                raise serializers.ValidationError("You are already registered")
+                raise serializers.ValidationError("You are already registered with the given mobile number.")
         return data
 
 

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
 DJOSER = {
     'SERIALIZERS': {
-        'user_registration': 'InfoSystem.serializers.ParentRegisterSerializer',
+        'user_registration': 'InfoSystem.serializers.UserRegisterSerializer',
     },
 }
 

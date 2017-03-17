@@ -7,13 +7,13 @@ from InfoSystem import views
 from rest_framework.authtoken import views as rest_views
 
 urlpatterns = [
-    url(r'^api/register/$', api_views.register, name='api-register'),
-    url(r'^api/login/$', api_views.login_user, name='api-login'),
+    # url(r'^api/register/$', api_views.register, name='api-register'),
+    # url(r'^api/login/$', api_views.login_user, name='api-login'),
     # url(r'^$', views.index, name='home'),
     url(r'^accounts/login/$', api_views.login_user, name='login'),
-    url(r'^api/logout/$', api_views.logout_view, name='api-logout'),
+    # url(r'^api/logout/$', api_views.logout_view, name='api-logout'),
     # url(r'^api/results/$', s_views.StudentList.as_view()),
-    url(r'^api/register/parent$', s_views.ParentRegisterView.as_view(), name='api-parent-register'),
+    url(r'^api/register/$', s_views.UserRegisterView.as_view(), name='api-register'),
     # url(r'^api/register/student', s_views.StudentRegisterView.as_view(), name='api-student-register'),
 
 

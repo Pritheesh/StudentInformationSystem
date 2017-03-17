@@ -24,16 +24,17 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default" style="background-color: #1f7e9a">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Welcome {{ user.username }}</a>
+            <a class="navbar-brand" style="color: white" href="#">Welcome {{ user.username }}</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="https://cvr.ac.in">Home</a></li>
+            <li class="active"><a style="color: white;background-color: #1f7e9a;" href="https://cvr.ac.in">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a style="color: white;background-color: #1f7e9a;" href="{% url 'logout' %}">
+                <span class="glyphicon glyphicon-log-out" style="color: white;background-color: #1f7e9a;"></span> Logout</a></li>
         </ul>
     </div>
 </nav>
@@ -45,31 +46,32 @@
 
     <div class="container">
         <div class="container" id="buttons">
-            {% for examinfo in exam_info %}
+            {% for key, value in stud_res_dict %}
                 {#                {% for i in num_buttons %}#}
                 <button class="btn btn-success"
-                        id="button{{ examinfo.year_of_pursue }}{{ examinfo.semester }}"
-                        onclick="onClick({{ examinfo.year_of_pursue }}{{ examinfo.semester }})">
-                    {{ examinfo.year_of_pursue_roman }} - {{ examinfo.semester_roman }}
+                        id="button{{ value.0.year_of_pursue }}{{ value.0.semester }}"
+                        onclick="onClick({{ value.0.year_of_pursue }}{{ value.0.semester }})">
+                    {{ value.0.year_of_pursue_roman }} - {{ value.0.semester_roman }}
                 </button>
                 {#                {% endfor %}#}
             {% endfor %}
         </div>
-        {% for examinfo in exam_info %}
+        {% for key, examinfo in stud_res_dict %}
             <div class="container
-                 {% if examinfo.year_of_pursue == 1 and examinfo.semester == 1 %}
+                 {% if examinfo.0.year_of_pursue == 1 and examinfo.0.semester == 1 %}
                     my_container
                     {% else %}
                     my_yet_other_container
                  {% endif %}
                   "
-                 id="div{{ examinfo.year_of_pursue }}{{ examinfo.semester }}">
-                    <h5 style="float: left">Examination held during {{ examinfo.month_of_year }}
-                        / {{ examinfo.year_of_calendar }}</h5>
-                    <h5 style="float: right"> B.Tech {{ examinfo.year_of_pursue_roman }}
-                        Year {{ examinfo.semester_roman }}
+                 id="div{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}">
+                {% for ei in examinfo %}
+                    <h5 style="float: left">Examination held during {{ ei.month_of_year }}
+                        / {{ ei.year_of_calendar }}</h5>
+                    <h5 style="float: right"> B.Tech {{ ei.year_of_pursue_roman }}
+                        Year {{ ei.semester_roman }}
                         Semester
-                        {% if examinfo.supple %}
+                        {% if ei.supple %}
                             Supple
                         {% else %}
                             Main
@@ -86,7 +88,7 @@
                             <th>Credits</th>
                         </tr>
 
-                        {% for result in examinfo.result.all %}
+                        {% for result in ei.result.all %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ result.subject }}</td>
@@ -98,7 +100,8 @@
                             </tr>
                         {% endfor %}
                     </table>
-                </div>
+                {% endfor %}
+            </div>
         {% endfor %}
     </div>
 </div>

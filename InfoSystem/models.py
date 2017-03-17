@@ -76,7 +76,12 @@ class ExamInfo(models.Model):
     supple = models.BooleanField()
 
     def __unicode__(self):
-        return self.year_of_pursue_roman+" "+self.semester_roman
+        desc = ""
+        if self.supple == False:
+            desc = ' Main'
+        else:
+            desc = ' Supple'
+        return self.year_of_pursue_roman+" "+self.semester_roman+desc
 
     class Meta:
         ordering = ['year_of_pursue', 'semester']

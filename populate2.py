@@ -317,6 +317,8 @@ for row in range(sheet.nrows):
     except:
         print sys.exc_info()
 
+
+
 # from _mysql import IntegrityError
 #
 # import MySQLdb

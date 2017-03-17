@@ -13,8 +13,8 @@ class UserForm(forms.Form):
     mobile =forms.CharField()
 
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'mobile')
+        model = CustomUser
+        fields = ('username', 'email', 'password', 'mobile', 'is_student')
 
 
 class UserRegistrationForm(forms.Form):

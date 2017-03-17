@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -10,6 +12,7 @@ from django.urls.base import reverse
 from InfoSystem.forms import UserRegistrationForm, UserLoginForm
 from InfoSystem.models import CustomUser, Student, Parent
 from MajorProject1 import settings
+
 
 
 def register(request):
@@ -74,21 +77,34 @@ def result_view(request):
     students = []
     if user.is_student is True:
         students.append(Student.objects.get(user=user))
-        exam_info = students[0].examinfo.all().filter().order_by('year_of_pursue', 'semester')
+        exam_info = students[0].examinfo.all().order_by('year_of_pursue', 'semester')
+        stud_res_dict = {}
+        for ei in exam_info:
+            index = 'sem' + str((ei.year_of_pursue - 1) * 2 + ei.semester)
+            print index
+            stud_res_dict.setdefault(index, []).append(ei)
         # num_buttons = len(examinfo)
-        return render(request, 'results_student.html', {'students': students, 'exam_info': exam_info})
+        return render(request, 'results_final_student.html',
+                      {'students': students, 'stud_res_dict': sorted(stud_res_dict.iteritems())})
 
     par = Parent.objects.get(user=user)
     students = par.student_set.all()
-    num = len(students)
-    exam_info = []
+    list_of_dicts = []
     my_dict = {}
     for student in students:
-        ei = student.examinfo.all().filter().order_by('year_of_pursue', 'semester')
-        exam_info.append(ei)
+        ei = student.examinfo.all().order_by('year_of_pursue', 'semester')
+        temp = {}
+        for e in ei:
+            index = 'sem' + str((e.year_of_pursue - 1) * 2 + e.semester)
+            print index
+            temp.setdefault(index, []).append(e)
+        print temp
+        temp = OrderedDict(sorted(temp.items(), key=lambda x: x[0]))
+        print temp
+        list_of_dicts.append(temp)
 
-    for stud, ei in zip(students, exam_info):
+    for stud, ei in zip(students, list_of_dicts):
         my_dict[stud] = ei
-
-    return render(request, 'results_parent.html', {'parent': par, 'students': students, 'exam_info': exam_info,
-                                                   'range': range(num), 'my_dict': my_dict})
+    print my_dict
+    return render(request, 'results_final_parent.html',
+                  {'parent': par, 'students': students, 'my_dict': my_dict})

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from InfoSystem.models import Parent, Student
-from InfoSystem.serializers import StudentSerializer, ParentRegisterSerializer
+from InfoSystem.serializers import StudentSerializer, UserRegisterSerializer
 
 
 class StudentList(APIView):
@@ -22,10 +22,10 @@ class StudentList(APIView):
         return Response(serializer.data)
 
 
-class ParentRegisterView(CreateAPIView):
+class UserRegisterView(CreateAPIView):
     model = get_user_model()
     permission_classes = (AllowAny, )
-    serializer_class = ParentRegisterSerializer
+    serializer_class = UserRegisterSerializer
     def get_queryset(self):
         if self.queryset is None:
             raise Exception('Users already registered')

@@ -88,27 +88,29 @@
                         </div>
                         <div>
                             <div class="container" id="buttons">
-                                {% for ei in examinfo %}
+                                {% for sem, ei in examinfo.items %}
                                     <button class="btn btn-success"
-                                            id="button{{ forloop.parentloop.counter }}{{ ei.year_of_pursue }}{{ ei.semester }}"
-                                            onclick="onClick({{ forloop.parentloop.counter }}, {{ ei.year_of_pursue }}{{ ei.semester }})">
-                                        {{ ei.year_of_pursue_roman }} - {{ ei.semester_roman }}
+                                            id="button{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
+                                            onclick="onClick({{ forloop.parentloop.counter }}, {{ ei.0.year_of_pursue }}{{ ei.0.semester }})">
+                                        {{ ei.0.year_of_pursue_roman }} - {{ ei.0.semester_roman }}
                                     </button>
                                 {% endfor %}
                             </div>
-                            {% for ei in examinfo %}
+                            {% for key, ei in examinfo.items %}
                                 <div class="container
-                                     {% if ei.year_of_pursue == 1 and ei.semester == 1 and forloop.parentloop.counter0 == 0 %}
+                                     {% if ei.0.year_of_pursue == 1 and ei.0.semester == 1 and forloop.parentloop.counter0 == 0 %}
                                         my_container
                                         {% else %}
                                         my_yet_other_container
                                      {% endif %}
                                       "
-                                     id="div{{ forloop.parentloop.counter }}{{ ei.year_of_pursue }}{{ ei.semester }}">
-                                    <h5 style="float: left">Examination held during {{ ei.month_of_year }}
-                                        / {{ ei.year_of_calendar }}</h5>
-                                    <h5 style="float: right"> B.Tech {{ ei.year_of_pursue_roman }}
-                                        Year {{ ei.semester_roman }}
+                                     id="div{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}">
+
+                                    {% for e in ei %}
+                                    <h5 style="float: left">Examination held during {{ e.month_of_year }}
+                                        / {{ e.year_of_calendar }}</h5>
+                                    <h5 style="float: right"> B.Tech {{ e.year_of_pursue_roman }}
+                                        Year {{ e.semester_roman }}
                                         Semester</h5><br/><br>
                                     <table class="table table-hover table-responsive table-striped">
                                         <tr>
@@ -121,7 +123,7 @@
                                             <th>Credits</th>
                                         </tr>
 
-                                        {% for result in ei.result.all %}
+                                        {% for result in e.result.all %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ result.subject }}</td>
@@ -133,6 +135,7 @@
                                             </tr>
                                         {% endfor %}
                                     </table>
+                                        {% endfor %}
                                 </div>
                             {% endfor %}
                         </div>

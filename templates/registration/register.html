@@ -7,14 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">
+        body{
+            background-image: url("{% static 'InfoSystem/yoyo.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+    </style>
 </head>
 <body>
 {#<h3>Register an Account</h3>#}
-
 <form class="form-horizontal" style="width: 50%;margin-left: auto;margin-right: auto" method="post">
     {% csrf_token %}
   <fieldset>
-    <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Sign Up</legend>
+    <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px;text-align: center">Sign Up</legend>
 {#      {% for field in form %}#}
 {#        <div class="form-group">#}
 {#            <div class="col-sm-offset-2 col-sm-10">#}
@@ -73,14 +81,14 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="id_is_student" class="col-lg-4 control-label">Student? </label>
+          <label for="id_isstudent" class="col-lg-4 control-label">Student? </label>
           <div class="col-lg-6">
-            <input type="checkbox"  id="id_isstudent" name="isstudent">
+            <input style="vertical-align: middle" type="checkbox"  id="id_isstudent" name="isstudent">
           </div>
         </div>
 
 
-      <div class="col-lg-10 col-lg-offset-2">
+      <div class="col-sm-11" align="center">
         <button type="reset" class="btn btn-danger">Cancel</button>
         <input type="submit" class="btn btn-success" value="Submit"/>
       </div>
@@ -94,7 +102,7 @@
     {% if error_message %}
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
-  <div>
+  <div align="center">
       <br><br>Already have an account? <a href="{% url 'login' %}">Click here</a> to log in.
   </div>
 
