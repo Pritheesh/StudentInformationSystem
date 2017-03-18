@@ -76,7 +76,6 @@ class ExamInfo(models.Model):
     supple = models.BooleanField()
 
     def __unicode__(self):
-        desc = ""
         if self.supple == False:
             desc = ' Main'
         else:

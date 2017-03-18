@@ -12,7 +12,7 @@ urlpatterns = [
     # url(r'^$', views.index, name='home'),
     url(r'^accounts/login/$', api_views.login_user, name='login'),
     # url(r'^api/logout/$', api_views.logout_view, name='api-logout'),
-    # url(r'^api/results/$', s_views.StudentList.as_view()),
+    url(r'^api/results/$', s_views.StudentList.as_view()),
     url(r'^api/register/$', s_views.UserRegisterView.as_view(), name='api-register'),
     # url(r'^api/register/student', s_views.StudentRegisterView.as_view(), name='api-student-register'),
 

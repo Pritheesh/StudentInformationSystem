@@ -2,8 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from rest_framework import serializers
 
-from InfoSystem.models import Parent, Student, Result, Subject, CustomUser
+from InfoSystem.models import Parent, Student, Result, Subject, CustomUser, ExamInfo
 from django.utils.translation import ugettext as _
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('is_student', )
 
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -18,11 +24,19 @@ class ResultSerializer(serializers.ModelSerializer):
         model = Result
         fields = ('subjects', 'internal_marks', 'external_marks', 'results', 'credits')
 
+
+class ExamInfoSerializer(serializers.ModelSerializer):
+    result = ResultSerializer(many=True)
+    class Meta:
+        model = ExamInfo
+        fields = ('year_of_pursue', 'semester', 'month_of_year', 'year_of_calendar', 'supple', 'year_of_pursue_roman', 'semester_roman', 'result')
+
+
 class StudentSerializer(serializers.ModelSerializer):
-    stud_results = ResultSerializer(many=True, read_only=True)
+    examinfo = ExamInfoSerializer(many=True, read_only=True)
     class Meta:
         model = Student
-        fields = ('name', 'email', 'hall_ticket', 'stud_results')
+        fields = ('name', 'email', 'hall_ticket', 'examinfo')
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
