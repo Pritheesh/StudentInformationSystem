@@ -74,6 +74,7 @@ class ExamInfo(models.Model):
     year_of_calendar = models.IntegerField()
     month_of_year = models.CharField(max_length=15)
     supple = models.BooleanField()
+    total = models.CharField(max_length=3, default='0')
 
     def __unicode__(self):
         if self.supple == False:
@@ -91,8 +92,31 @@ class Result(models.Model):
     examinfo = models.ForeignKey(ExamInfo, related_name='result')
     internal_marks = models.CharField(max_length=3)
     external_marks = models.CharField(max_length=3)
+    total = models.CharField(max_length=3)
     results = models.CharField(max_length=5)
     credits = models.IntegerField()
 
     def __unicode__(self):
         return self.subject.name
+
+
+
+class AchievementInASemester(models.Model):
+    rank = models.IntegerField()
+    student = models.ForeignKey(Student)
+    examinfo = models.ForeignKey(ExamInfo)
+
+    def __unicode__(self):
+        return self.student.hall_ticket+" "+self.examinfo.year_of_pursue_roman+" "+self.examinfo.semester_roman+" "+str(self.rank)
+
+class AchievementInASubject(models.Model):
+    rank = models.IntegerField()
+    student = models.ForeignKey(Student)
+    result = models.ForeignKey(Result)
+    year_of_pursue_roman = models.CharField(max_length=5)
+    semester_roman = models.CharField(max_length=2)
+    semester = models.IntegerField()
+    year_of_pursue = models.IntegerField()
+
+    def __unicode__(self):
+        return self.student.hall_ticket+" "+self.result.subject.name+" "+str(self.rank)

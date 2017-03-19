@@ -18,6 +18,7 @@ urlpatterns = [
 
 
     # url(r'^results/$', api_views.result_view, name='result-view'),
+    url(r'^$', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
     url(r'^login/$', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
     url(r'^register/$', views.register, name='register'),
     url(r'^results/$', login_required(views.result_view), name='result-view'),

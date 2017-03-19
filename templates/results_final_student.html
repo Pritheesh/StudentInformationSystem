@@ -66,6 +66,7 @@
                   "
                  id="div{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}">
                 {% for ei in examinfo %}
+{#                    {{ sem_dict.keys }}#}
                     <h5 style="float: left">Examination held during {{ ei.month_of_year }}
                         / {{ ei.year_of_calendar }}</h5>
                     <h5 style="float: right"> B.Tech {{ ei.year_of_pursue_roman }}
@@ -94,12 +95,23 @@
                                 <td>{{ result.subject }}</td>
                                 <td>{{ result.internal_marks }}</td>
                                 <td>{{ result.external_marks }}</td>
-                                <td>{{ result.internal_marks|add:result.external_marks }}</td>
+                                <td>{{ result.total }}</td>
                                 <td>{{ result.results }}</td>
                                 <td>{{ result.credits }}</td>
                             </tr>
                         {% endfor %}
                     </table>
+                    Total Marks: {{ ei.total }}<br>
+                    {% if ei.supple == False and sem_dict %}
+                    Achievements <br>
+                        Your ranks are as Follows<br>
+                    {% for ach in sem_dict|get_item:key %}
+                        {{ ach.rank }} in this Semester.<br>
+                        {% endfor %}
+                    {% for ach in sub_dict|get_item:key %}
+                        {{ ach.rank }} in {{ ach.result.subject }}.<br>
+                    {% endfor %}
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}

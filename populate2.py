@@ -33,6 +33,15 @@ for row in range(sheet.nrows):
     except:
         ext_marks = str(sheet.cell(row, 5).value)
 
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -55,8 +64,10 @@ for row in range(sheet.nrows):
         sub = Subject.objects.get(subject_code=sub_code)
         # Modify the below code accordingly
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=1, semester=1)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                        credits=credits, examinfo=exam_object)
+                        credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()
@@ -83,7 +94,15 @@ for row in range(sheet.nrows):
         ext_marks = str(int(sheet.cell(row, 5).value))
     except:
         ext_marks = str(sheet.cell(row, 5).value)
-
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -106,8 +125,10 @@ for row in range(sheet.nrows):
         sub = Subject.objects.get(subject_code=sub_code)
         # Modify the below code accordingly
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=1, semester=2)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                            credits=credits, examinfo=exam_object)
+                            credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()
@@ -134,7 +155,15 @@ for row in range(sheet.nrows):
         ext_marks = str(int(sheet.cell(row, 5).value))
     except:
         ext_marks = str(sheet.cell(row, 5).value)
-
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -158,8 +187,10 @@ for row in range(sheet.nrows):
         sub = Subject.objects.get(subject_code=sub_code)
         # Modify the below code accordingly
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=2, semester=1)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                            credits=credits, examinfo=exam_object)
+                            credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()
@@ -186,7 +217,15 @@ for row in range(sheet.nrows):
         ext_marks = str(int(sheet.cell(row, 5).value))
     except:
         ext_marks = str(sheet.cell(row, 5).value)
-
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -210,8 +249,10 @@ for row in range(sheet.nrows):
         # Modify the below code accordingly
 
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=2, semester=2)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                            credits=credits, examinfo=exam_object)
+                            credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()
@@ -238,7 +279,15 @@ for row in range(sheet.nrows):
         ext_marks = str(int(sheet.cell(row, 5).value))
     except:
         ext_marks = str(sheet.cell(row, 5).value)
-
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -260,8 +309,10 @@ for row in range(sheet.nrows):
         sub = Subject.objects.get(subject_code=sub_code)
         # Modify the below code accordingly
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=3, semester=1)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                            credits=credits, examinfo=exam_object)
+                            credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()
@@ -288,7 +339,15 @@ for row in range(sheet.nrows):
         ext_marks = str(int(sheet.cell(row, 5).value))
     except:
         ext_marks = str(sheet.cell(row, 5).value)
-
+    total_marks = 0
+    try:
+        total_marks += int(int_marks)
+    except:
+        print "buddy was absent for internal"
+    try:
+        total_marks += int(ext_marks)
+    except:
+        print "Buddy was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
@@ -311,8 +370,10 @@ for row in range(sheet.nrows):
         sub = Subject.objects.get(subject_code=sub_code)
         # Modify the below code accordingly
         exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=4, semester=1)
+        exam_object.total = str(int(exam_object.total) + total_marks)
+        exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
-                            credits=credits, examinfo=exam_object)
+                            credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
         print sys.exc_info()

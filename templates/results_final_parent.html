@@ -107,41 +107,57 @@
                                      id="div{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}">
 
                                     {% for e in ei %}
-                                    <h5 style="float: left">Examination held during {{ e.month_of_year }}
-                                        / {{ e.year_of_calendar }}</h5>
-                                    <h5 style="float: right"> B.Tech {{ e.year_of_pursue_roman }}
-                                        Year {{ e.semester_roman }}
-                                        Semester
-                                         {% if e.supple is False %}
-                                             Main
-                                             {% else %}
-                                             Supple
-                                         {% endif %}
-                                    </h5><br/><br>
-                                    <table class="table table-hover table-responsive table-striped">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Subject</th>
-                                            <th>Internal Exams</th>
-                                            <th>External Exams</th>
-                                            <th>Total</th>
-                                            <th>Result</th>
-                                            <th>Credits</th>
-                                        </tr>
-
-                                        {% for result in e.result.all %}
+                                        <h5 style="float: left">Examination held during {{ e.month_of_year }}
+                                            / {{ e.year_of_calendar }}</h5>
+                                        <h5 style="float: right"> B.Tech {{ e.year_of_pursue_roman }}
+                                            Year {{ e.semester_roman }}
+                                            Semester
+                                             {% if e.supple is False %}
+                                                 Main
+                                                 {% else %}
+                                                 Supple
+                                             {% endif %}
+                                        </h5><br/><br>
+                                        <table class="table table-hover table-responsive table-striped">
                                             <tr>
-                                                <td>{{ forloop.counter }}</td>
-                                                <td>{{ result.subject }}</td>
-                                                <td>{{ result.internal_marks }}</td>
-                                                <td>{{ result.external_marks }}</td>
-                                                <td>{{ result.internal_marks|add:result.external_marks }}</td>
-                                                <td>{{ result.results }}</td>
-                                                <td>{{ result.credits }}</td>
+                                                <th>#</th>
+                                                <th>Subject</th>
+                                                <th>Internal Exams</th>
+                                                <th>External Exams</th>
+                                                <th>Total</th>
+                                                <th>Result</th>
+                                                <th>Credits</th>
                                             </tr>
+
+                                            {% for result in e.result.all %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ result.subject }}</td>
+                                                    <td>{{ result.internal_marks }}</td>
+                                                    <td>{{ result.external_marks }}</td>
+                                                    <td>{{ result.internal_marks|add:result.external_marks }}</td>
+                                                    <td>{{ result.results }}</td>
+                                                    <td>{{ result.credits }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                            Total Marks: {{ e.total }}<br>
+                                        {% for item in  list_of_sem|get_list:forloop.parentloop.parentloop.counter0 %}
+                                            {{ item }}
+{#                                            {{ e }}#}
+                                            {% if e.supple == False and item %}
+                                                Achievements <br>
+                                                Your ranks are as Follows<br>
+                                                    {% for ach in item|get_item:key %}
+                                                        {{ ach.rank }} in this Semester.<br>
+                                                    {% endfor %}
+    {#                                                {% for ach in sub_dict|get_item:key %}#}
+    {#                                                    {{ ach.rank }} in {{ ach.result.subject }}.<br>#}
+    {#                                                {% endfor %}#}
+                                            {% endif %}
                                         {% endfor %}
-                                    </table>
                                     {% endfor %}
+
                                 </div>
                             {% endfor %}
                         </div>
