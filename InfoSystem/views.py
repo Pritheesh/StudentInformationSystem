@@ -111,8 +111,8 @@ def result_view(request):
     students = par.student_set.all()
     list_of_dicts = []
     my_dict = {}
-    list_of_sem = []
-    list_of_subs = []
+    list_of_sem = {}
+    list_of_subs = {}
     for student in students:
         ei = student.examinfo.all().order_by('year_of_pursue', 'semester')
         temp = {}
@@ -130,14 +130,14 @@ def result_view(request):
         for ach in sem_achievements:
             index = 'sem' + str((ach.examinfo.year_of_pursue - 1) * 2 + ach.examinfo.semester)
             sem_dict.setdefault(index, []).append(ach)
-        list_of_sem.append(sem_dict)
+        list_of_sem[student]=sem_dict
         print list_of_sem
         sub_achievements = student.achievementinasubject_set.all()
         sub_dict = {}
         for ach in sub_achievements:
             index = 'sem' + str((ach.year_of_pursue - 1) * 2 + ach.semester)
             sub_dict.setdefault(index, []).append(ach)
-        list_of_subs.append(sub_dict)
+        list_of_subs[student]=sub_dict
         print list_of_subs
     for stud, ei in zip(students, list_of_dicts):
         my_dict[stud] = ei

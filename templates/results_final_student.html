@@ -101,16 +101,26 @@
                             </tr>
                         {% endfor %}
                     </table>
-                    Total Marks: {{ ei.total }}<br>
+                    <h4>Total Marks: {{ ei.total }}</h4>
                     {% if ei.supple == False and sem_dict %}
-                    Achievements <br>
-                        Your ranks are as Follows<br>
-                    {% for ach in sem_dict|get_item:key %}
-                        {{ ach.rank }} in this Semester.<br>
-                        {% endfor %}
-                    {% for ach in sub_dict|get_item:key %}
-                        {{ ach.rank }} in {{ ach.result.subject }}.<br>
-                    {% endfor %}
+                        <h3>Achievements: </h3>
+
+                            {% for ach in sem_dict|get_item:key %}
+                                <h4>You have secured rank {{ ach.rank }} in this Semester.</h4><br>
+                            {% endfor %}
+                            <h4>Achievements desk</h4>
+                            <table class="table table-hover table-responsive table-striped">
+                            <tr>
+                                <th>Rank</th>
+                                <th>Subject</th>
+                            </tr>
+                            {% for ach in sub_dict|get_item:key %}
+                                <tr>
+                                    <td>{{ ach.rank }}</td>
+                                    <td>{{ ach.result.subject }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                     {% endif %}
                 {% endfor %}
             </div>

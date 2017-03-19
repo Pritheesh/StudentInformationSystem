@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28aa4d32-4c23-43ee-b221-40e1246fb0f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/execute.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts2.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/InfoSystem/migrations/0001_initial.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/results2.xls" afterPath="$PROJECT_DIR$/results2.xls" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InfoSystem/models.py" afterPath="$PROJECT_DIR$/InfoSystem/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InfoSystem/urls.py" afterPath="$PROJECT_DIR$/InfoSystem/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InfoSystem/views.py" afterPath="$PROJECT_DIR$/InfoSystem/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/populate.py" afterPath="$PROJECT_DIR$/populate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/populate2.py" afterPath="$PROJECT_DIR$/populate2.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/populate3.py" afterPath="$PROJECT_DIR$/populate3.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/results_final_parent.html" afterPath="$PROJECT_DIR$/templates/results_final_parent.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/results_final_student.html" afterPath="$PROJECT_DIR$/templates/results_final_student.html" />
     </list>
@@ -81,8 +70,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/InfoSystem/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="140" column="26" lean-forward="false" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
+            <state relative-caret-position="236">
+              <caret line="139" column="38" lean-forward="false" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="38" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -93,8 +82,8 @@
       <file leaf-file-name="results_final_parent.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/results_final_parent.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="144" column="118" lean-forward="true" selection-start-line="144" selection-start-column="118" selection-end-line="144" selection-end-column="118" />
+            <state relative-caret-position="167">
+              <caret line="148" column="97" lean-forward="false" selection-start-line="148" selection-start-column="97" selection-end-line="148" selection-end-column="97" />
               <folding />
             </state>
           </provider>
@@ -103,8 +92,8 @@
       <file leaf-file-name="results_final_student.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/results_final_student.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="113" column="31" lean-forward="true" selection-start-line="104" selection-start-column="20" selection-end-line="113" selection-end-column="31" />
+            <state relative-caret-position="227">
+              <caret line="115" column="33" lean-forward="true" selection-start-line="110" selection-start-column="28" selection-end-line="115" selection-end-column="33" />
               <folding>
                 <element signature="n#style#0;n#h5#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h5#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -201,8 +190,8 @@
         <option value="$PROJECT_DIR$/execute.py" />
         <option value="$PROJECT_DIR$/scripts2.py" />
         <option value="$PROJECT_DIR$/templates/results_student.html" />
-        <option value="$PROJECT_DIR$/templates/results_final_student.html" />
         <option value="$PROJECT_DIR$/InfoSystem/views.py" />
+        <option value="$PROJECT_DIR$/templates/results_final_student.html" />
         <option value="$PROJECT_DIR$/templates/results_final_parent.html" />
       </list>
     </option>
@@ -1156,8 +1145,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/InfoSystem/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="140" column="26" lean-forward="false" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
+        <state relative-caret-position="236">
+          <caret line="139" column="38" lean-forward="false" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="38" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -1166,8 +1155,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/results_final_student.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="113" column="31" lean-forward="true" selection-start-line="104" selection-start-column="20" selection-end-line="113" selection-end-column="31" />
+        <state relative-caret-position="227">
+          <caret line="115" column="33" lean-forward="true" selection-start-line="110" selection-start-column="28" selection-end-line="115" selection-end-column="33" />
           <folding>
             <element signature="n#style#0;n#h5#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h5#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1177,8 +1166,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/results_final_parent.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="144" column="118" lean-forward="true" selection-start-line="144" selection-start-column="118" selection-end-line="144" selection-end-column="118" />
+        <state relative-caret-position="167">
+          <caret line="148" column="97" lean-forward="false" selection-start-line="148" selection-start-column="97" selection-end-line="148" selection-end-column="97" />
           <folding />
         </state>
       </provider>

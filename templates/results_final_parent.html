@@ -141,21 +141,27 @@
                                                 </tr>
                                             {% endfor %}
                                         </table>
-                                            Total Marks: {{ e.total }}<br>
-                                        {% for item in  list_of_sem|get_list:forloop.parentloop.parentloop.counter0 %}
-                                            {{ item }}
-{#                                            {{ e }}#}
-                                            {% if e.supple == False and item %}
-                                                Achievements <br>
-                                                Your ranks are as Follows<br>
-                                                    {% for ach in item|get_item:key %}
-                                                        {{ ach.rank }} in this Semester.<br>
-                                                    {% endfor %}
-    {#                                                {% for ach in sub_dict|get_item:key %}#}
-    {#                                                    {{ ach.rank }} in {{ ach.result.subject }}.<br>#}
-    {#                                                {% endfor %}#}
-                                            {% endif %}
-                                        {% endfor %}
+                                        <h4>Total Marks: {{ e.total }}</h4>
+
+                                        {% if e.supple == False and list_of_sem|get_item:student|get_item:key %}
+                                            <h3>Achievements: </h3>
+                                            {% for ach in list_of_sem|get_item:student|get_item:key %}
+                                                <h4>Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester<br>
+                                            {% endfor %}
+                                            <h4>Achievements desk</h4>
+                                            <table class="table table-hover table-responsive table-striped">
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Subject</th>
+                                                </tr>
+                                                {% for ach in list_of_subs|get_item:student|get_item:key %}
+                                                    <tr>
+                                                        <td>{{ ach.rank }}</td>
+                                                        <td>{{ ach.result.subject }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        {% endif %}
                                     {% endfor %}
 
                                 </div>
