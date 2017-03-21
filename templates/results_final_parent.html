@@ -7,6 +7,7 @@
 {#    <link rel="stylesheet" href="{% static 'InfoSystem/bootstrap.css' %}">#}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'InfoSystem/bootstrap.css' %}">
     <title>Student Results Page</title>
 
 
@@ -53,22 +54,21 @@
 
 <div style="position: relative">
     <div class="container">
-        <h4 style="float: left">Father Name: {{ parent.father_name }}</h4>
-        <h4 style="float: right">Mobile No: {{ parent.mobile }}</h4><br>
+        <h4 style="color: #204d74;padding-left: 190px">Your Details</h4>
+        <h4 style="padding-left: 190px">Father : {{ parent.father_name }}</h4>
+        <h4 style="padding-left: 190px">Mother : {{ parent.mother_name }}</h4>
+        <h4 style="padding-left: 190px">Mobile : {{ parent.mobile }}</h4>
     </div>
     <div class="container">
-        <h4>Mother Name: {{ parent.mother_name }}</h4><br>
     </div>
     <div>
-        <div class="container" id="buttons">
+        <div class="container" id="buttons" style="padding-left: 200px">
             {% for student in students %}
-                    {#                {% for i in num_buttons %}#}
                 <button class="btn btn-success"
                         id="button{{ forloop.counter }}"
                         onclick="onClickOuter({{ forloop.counter }})">
                     {{ student.name }}
                 </button>
-                    {#                {% endfor %}#}
                 {% endfor %}
         </div>
         <div class="container" style="position: relative">
@@ -83,11 +83,13 @@
                         id="div{{ forloop.counter }}">
                     <div>
                         <div class="container">
-                            <h4 style="float: left">Name: {{ student.name }}</h4>
-                            <h4 style="float: right">Roll No: {{ student.hall_ticket }}</h4><br>
+                            <h4 style="color: #204d74;padding-left: 180px;">Details</h4>
+                            <h4 style="padding-left: 180px">Name : {{ student.name }}</h4>
+                            <h4 style="padding-left: 180px">Roll No : {{ student.hall_ticket }}</h4>
+                            <h4 style="padding-left: 180px">Branch : {{ student.branch }}</h4>
                         </div>
                         <div>
-                            <div class="container" id="buttons">
+                            <div class="container" id="buttons" style="padding-left: 190px">
                                 {% for sem, ei in examinfo.items %}
                                     <button class="btn btn-success"
                                             id="button{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
@@ -95,7 +97,7 @@
                                         {{ ei.0.year_of_pursue_roman }} - {{ ei.0.semester_roman }}
                                     </button>
                                 {% endfor %}
-                            </div>
+                            </div><br>
                             {% for key, ei in examinfo.items %}
                                 <div class="container
                                     {% if ei.0.year_of_pursue == 1 and ei.0.semester == 1 and forloop.parentloop.counter0 == 0 %}
@@ -107,9 +109,8 @@
                                      id="div{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}">
 
                                     {% for e in ei %}
-                                        <h5 style="float: left">Examination held during {{ e.month_of_year }}
-                                            / {{ e.year_of_calendar }}</h5>
-                                        <h5 style="float: right"> B.Tech {{ e.year_of_pursue_roman }}
+                                        <h4 style="text-align: center; color: #195f91">
+                                        B.Tech {{ e.year_of_pursue_roman }}
                                             Year {{ e.semester_roman }}
                                             Semester
                                              {% if e.supple is False %}
@@ -117,8 +118,9 @@
                                                  {% else %}
                                                  Supple
                                              {% endif %}
-                                        </h5><br/><br>
-                                        <table class="table table-hover table-responsive table-striped">
+                                            held during {{ e.month_of_year }} / {{ e.year_of_calendar }}
+                                        </h4><br/>
+                                        <table class="table table-hover table-responsive table-striped main_table">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Subject</th>
@@ -141,15 +143,24 @@
                                                 </tr>
                                             {% endfor %}
                                         </table>
-                                        <h4>Total Marks: {{ e.total }}</h4>
-
+                                        <h4 style="text-align: right;padding-right: 250px;color: #195f91">Total Marks: {{ e.total }}</h4>
+                                        {% if e.supple == False %}
+                                            <h4 id="div_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}" style="padding-left: 755px;color: #195f91">Percentage: </h4>
+                                            <label style="padding-left: 190px" for="total">Enter Total </label>
+                                            <input type="text" id="total">
+                                            <button id="id_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
+                                                    class="btn btn-primary"
+                                                    onclick="calcPercentage({{ e.total }}, {{ ei.0.year_of_pursue }}, {{ ei.0.semester }})">
+                                                    Calculate Percentage
+                                            </button>
+                                        {% endif %}
                                         {% if e.supple == False and list_of_sem|get_item:student|get_item:key %}
-                                            <h3>Achievements: </h3>
+                                            <h3 style="padding-left: 170px;color: #204d74;">Achievements: </h3>
                                             {% for ach in list_of_sem|get_item:student|get_item:key %}
-                                                <h4>Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester<br>
-                                            {% endfor %}
-                                            <h4>Achievements desk</h4>
-                                            <table class="table table-hover table-responsive table-striped">
+                                                <h4 style="padding-left: 170px;">Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester</h4><br>
+                                            {% endfor %}<br>
+                                            <h4 style="text-align: center; color: #195f91">Achievements desk</h4>
+                                            <table class="table table-hover table-responsive table-striped ach_table">
                                                 <tr>
                                                     <th>Rank</th>
                                                     <th>Subject</th>
