@@ -19,55 +19,71 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ('name', )
 
 
+class AchievementInASemesterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AchievementInASemester
+        fields = ('rank', )
+
+
+class AchievementInASubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AchievementInASubject
+        fields = ('rank', 'semester', 'year_of_pursue')
+
+
+
 class ResultSerializer(serializers.ModelSerializer):
     subjects = SubjectSerializer(source='subject', read_only=True)
+    ach_res = AchievementInASubjectSerializer(many=True)
     class Meta:
         model = Result
-        fields = ('subjects', 'internal_marks', 'external_marks', 'results', 'credits')
+        fields = ('subjects', 'internal_marks', 'external_marks', 'results', 'credits', 'ach_res')
 
 
 class ExamInfoSerializer(serializers.ModelSerializer):
     result = ResultSerializer(many=True)
+    examinfo = AchievementInASemesterSerializer(many=True)
     class Meta:
         model = ExamInfo
-        fields = ('year_of_pursue', 'semester', 'month_of_year', 'year_of_calendar', 'supple', 'year_of_pursue_roman', 'semester_roman', 'result')
+        fields = ('year_of_pursue', 'semester', 'month_of_year', 'year_of_calendar', 'supple', 'year_of_pursue_roman',
+                  'semester_roman', 'result', 'examinfo')
 
 
-class ResultSerializer2(serializers.ModelSerializer):
-    subjects = SubjectSerializer(source='subject', read_only=True)
-    class Meta:
-        model = Result
-        fields = ('subjects',)
+# class ResultSerializer2(serializers.ModelSerializer):
+#     subjects = SubjectSerializer(source='subject', read_only=True)
+#     class Meta:
+#         model = Result
+#         fields = ('subjects',)
+#
+#
+# class ExamInfoSerializer2(serializers.ModelSerializer):
+#     # result = ResultSerializer2(many=True)
+#     class Meta:
+#         model = ExamInfo
+#         fields = ('year_of_pursue', 'semester', 'month_of_year', 'year_of_calendar')
 
 
-class ExamInfoSerializer2(serializers.ModelSerializer):
-    # result = ResultSerializer2(many=True)
-    class Meta:
-        model = ExamInfo
-        fields = ('year_of_pursue', 'semester', 'month_of_year', 'year_of_calendar')
-
-
-class AchievementInASemesterSerializer(serializers.ModelSerializer):
-    examinfo = ExamInfoSerializer2()
-    class Meta:
-        model = AchievementInASemester
-        fields = ('rank', 'examinfo')
-
-
-class AchievementInASubjectSerializer(serializers.ModelSerializer):
-    result = ResultSerializer2()
-    class Meta:
-        model = AchievementInASubject
-        fields = ('rank', 'semester', 'year_of_pursue', 'result')
+# class AchievementInASemesterSerializer(serializers.ModelSerializer):
+#     examinfo = ExamInfoSerializer2()
+#     class Meta:
+#         model = AchievementInASemester
+#         fields = ('rank', 'examinfo')
+#
+#
+# class AchievementInASubjectSerializer(serializers.ModelSerializer):
+#     result = ResultSerializer2()
+#     class Meta:
+#         model = AchievementInASubject
+#         fields = ('rank', 'semester', 'year_of_pursue', 'result')
 
 
 class StudentSerializer(serializers.ModelSerializer):
     examinfo = ExamInfoSerializer(many=True, read_only=True)
-    achievementinasemester = AchievementInASemesterSerializer(many=True)
-    ach_subject = AchievementInASubjectSerializer(many=True)
+    # achievementinasemester = AchievementInASemesterSerializer(many=True)
+    # ach_subject = AchievementInASubjectSerializer(many=True)
     class Meta:
         model = Student
-        fields = ('name', 'email', 'hall_ticket', 'examinfo', 'achievementinasemester', 'ach_subject')
+        fields = ('name', 'email', 'hall_ticket', 'examinfo')
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

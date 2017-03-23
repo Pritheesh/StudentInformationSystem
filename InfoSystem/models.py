@@ -111,6 +111,7 @@ class AchievementInASemester(models.Model):
     def __unicode__(self):
         return self.student.hall_ticket+" "+self.examinfo.year_of_pursue_roman+" "+self.examinfo.semester_roman+" "+str(self.rank)
 
+
 class AchievementInASubject(models.Model):
     rank = models.IntegerField()
     student = models.ForeignKey(Student, related_name='ach_subject')

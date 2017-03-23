@@ -188,12 +188,12 @@ def result_view(request):
                 print index
                 stud_res_dict.setdefault(index, []).append(ei)
             # num_buttons = len(examinfo)
-            sem_achievements = students[0].achievementinasemester_set.all()
+            sem_achievements = students[0].achievementinasemester.all()
             sem_dict = {}
             for ach in sem_achievements:
                 index = 'sem' + str((ach.examinfo.year_of_pursue - 1) * 2 + ach.examinfo.semester)
                 sem_dict.setdefault(index, []).append(ach)
-            sub_achievements = students[0].achievementinasubject_set.all()
+            sub_achievements = students[0].ach_subject.all()
             sub_dict = {}
             for ach in sub_achievements:
                 index = 'sem' + str((ach.year_of_pursue - 1) * 2 + ach.semester)
@@ -221,13 +221,13 @@ def result_view(request):
             list_of_dicts.append(temp)
 
             sem_dict = {}
-            sem_achievements = student.achievementinasemester_set.all()
+            sem_achievements = student.achievementinasemester.all()
             for ach in sem_achievements:
                 index = 'sem' + str((ach.examinfo.year_of_pursue - 1) * 2 + ach.examinfo.semester)
                 sem_dict.setdefault(index, []).append(ach)
             list_of_sem[student]=sem_dict
             print list_of_sem
-            sub_achievements = student.achievementinasubject_set.all()
+            sub_achievements = student.ach_subject.all()
             sub_dict = {}
             for ach in sub_achievements:
                 index = 'sem' + str((ach.year_of_pursue - 1) * 2 + ach.semester)
