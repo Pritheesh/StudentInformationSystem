@@ -18,9 +18,11 @@ urlpatterns = [
 
 
     # url(r'^results/$', api_views.result_view, name='result-view'),
-    url(r'^$', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
-    url(r'^login/$', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
-    url(r'^register/$', views.register, name='register'),
+    url(r'^$', views.login_view, name='login'),
+    url(r'^login/$', views.login_view, name='login'),
+    url(r'^verify/(?P<id>\S+)/$', views.otp_verify, name='otp-verify'),
+    url(r'^register/$', views.register2, name='register'),
+    url(r'^token/(?P<id>\S+)/$', views.otp_token, name='token'),
     url(r'^results/$', login_required(views.result_view), name='result-view'),
     url(r'^logout/$', views.logout_view, name='logout'),
 ]

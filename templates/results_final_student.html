@@ -100,17 +100,17 @@
                         {% endfor %}
                     </table><br/>
                     <h4 style="text-align: right;padding-right: 250px;color: #195f91">Total Marks: {{ ei.total }}</h4>
-                    {% if ei.supple == False %}
-                        <h4 id="div_total{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}"
-                            style="padding-left: 755px;color: #195f91">Percentage: </h4>
-                        <label style="padding-left: 190px" for="total">Enter Total </label>
-                        <input type="text" id="total">
-                        <button id="id_total"
-                                class="btn btn-primary"
-                                onclick="calcPercentage({{ ei.total }}, {{ examinfo.0.year_of_pursue }}, {{ examinfo.0.semester }})">
-                                Calculate Percentage
-                        </button>
-                    {% endif %}
+{#                    {% if ei.supple == False %}#}
+{#                        <h4 id="div_total{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}"#}
+{#                            style="padding-left: 755px;color: #195f91">Percentage: </h4>#}
+{#                        <label style="padding-left: 190px" for="total">Enter Total </label>#}
+{#                        <input type="text" id="total">#}
+{#                        <button id="id_total"#}
+{#                                class="btn btn-primary"#}
+{#                                onclick="calcPercentage({{ ei.total }}, {{ examinfo.0.year_of_pursue }}, {{ examinfo.0.semester }})">#}
+{#                                Calculate Percentage#}
+{#                        </button>#}
+{#                    {% endif %}#}
                     {% if ei.supple == False and sem_dict %}
                         <h3 style="padding-left: 170px;color: #204d74;">Achievements: </h3>
 

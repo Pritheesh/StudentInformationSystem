@@ -21,6 +21,7 @@
 {#<h3>Register an Account</h3>#}
 <form class="form-horizontal" style="width: 50%;margin-left: auto;margin-right: auto" method="post">
     {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
   <fieldset>
     <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px;text-align: center">Sign Up</legend>
 {#      {% for field in form %}#}

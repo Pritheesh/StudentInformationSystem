@@ -144,16 +144,16 @@
                                             {% endfor %}
                                         </table>
                                         <h4 style="text-align: right;padding-right: 250px;color: #195f91">Total Marks: {{ e.total }}</h4>
-                                        {% if e.supple == False %}
-                                            <h4 id="div_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}" style="padding-left: 755px;color: #195f91">Percentage: </h4>
-                                            <label style="padding-left: 190px" for="total">Enter Total </label>
-                                            <input type="text" id="total">
-                                            <button id="id_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
-                                                    class="btn btn-primary"
-                                                    onclick="calcPercentage({{ e.total }}, {{ ei.0.year_of_pursue }}, {{ ei.0.semester }})">
-                                                    Calculate Percentage
-                                            </button>
-                                        {% endif %}
+{#                                        {% if e.supple == False %}#}
+{#                                            <h4 id="div_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}" style="padding-left: 755px;color: #195f91">Percentage: </h4>#}
+{#                                            <label style="padding-left: 190px" for="total">Enter Total </label>#}
+{#                                            <input type="text" id="total">#}
+{#                                            <button id="id_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"#}
+{#                                                    class="btn btn-primary"#}
+{#                                                    onclick="calcPercentage({{ e.total }}, {{ ei.0.year_of_pursue }}, {{ ei.0.semester }})">#}
+{#                                                    Calculate Percentage#}
+{#                                            </button>#}
+{#                                        {% endif %}#}
                                         {% if e.supple == False and list_of_sem|get_item:student|get_item:key %}
                                             <h3 style="padding-left: 170px;color: #204d74;">Achievements: </h3>
                                             {% for ach in list_of_sem|get_item:student|get_item:key %}

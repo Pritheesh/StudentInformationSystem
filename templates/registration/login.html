@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style type="text/css">
+        body{
+                background-image: url("{% static 'InfoSystem/yoyo.jpeg' %}");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }
+    </style>
 </head>
 <body>
-<form class="form-horizontal" style="width: 40%;margin-left: auto;margin-right: auto" method="post" action=".">
+<form class="form-horizontal" style="width: 40%;margin-left: auto;margin-right: auto; text-align: center" method="post" action=".">
     {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
     <fieldset>
         <legend style="font-weight: bolder;margin-bottom: 20px; padding: 20px">Login</legend>
         <div class="col-lg-10 col-lg-offset-2">
@@ -39,11 +49,11 @@
             </div>
         </div>
 
-        <div class="col-lg-10 col-lg-offset-2">
-            <input type="submit" class="btn btn-primary" value="Login"/>
-            <div class="panel-footer">
-                Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
-            </div>
+        <div class="col-lg-6">
+            <input type="submit" class="btn btn-primary" value="Login"/><br>
+        </div>
+        <div class="col-lg-8">
+            Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
         </div>
     </fieldset>
 </form>

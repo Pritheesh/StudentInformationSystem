@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'InfoSystem',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_otp',
+    'otp_twilio',
     'djoser',
 ]
 
@@ -70,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -152,3 +155,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+OTP_TWILIO_ACCOUNT = 'AC389a717f7b9ed58e21b14299e387a684'
+OTP_TWILIO_AUTH = 'cea7fbda1c900d3a216b6a2d0f10cac9'
+OTP_TWILIO_FROM = '+12052911431'
+OTP_TWILIO_NO_DELIVERY = False
+OTP_TWILIO_TOKEN_VALIDITY = 18000
+OTP_TWILIO_CHALLENGE_MESSAGE = 'Sent by SMS: {token}'
+OTP_TWILIO_TOKEN_TEMPLATE = 'Token is {token}'

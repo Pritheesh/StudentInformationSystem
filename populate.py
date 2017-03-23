@@ -40,13 +40,13 @@ for i in range(0, 7):
             father_mobile = str(int(sheet.cell(row, 11).value)).strip()
         except:
             father_mobile = None
-        print "Father: ", father_name
+        # print "Father: ", father_name
         mother_name = str(sheet.cell(row, 10).value).strip().title()
         try:
             par = Parent(father_name=father_name, mobile=father_mobile, mother_name=mother_name)
             par.save()
         except:
-            pass
+            print "There was a problem in inserting details of "+father_name
 
 #populate student table
 for i in range(0, 7):
@@ -57,7 +57,7 @@ for i in range(0, 7):
         except:
             father_mobile=None
         hall_ticket = str(sheet.cell(row, 1).value).strip()
-        print hall_ticket
+        # print hall_ticket
         name = str(sheet.cell(row, 2).value).strip().title()
         # print "student: ", name
         try:
@@ -91,6 +91,7 @@ for row in range(4, sheet.nrows):
     if sub.count()==0:
         sub = Subject(subject_code=sub_code, name=sub_name)
         sub.save()
+        print "Inserted "+sub_name
 
 
 #populate ExamInfo table
@@ -125,7 +126,7 @@ for row in range(4, sheet.nrows):
         hall_ticket = str(sheet.cell(row, 0).value).strip()
         hall1 = hall_ticket
 
-        print hall_ticket, " in results table"
+        # print hall_ticket, " in results table"
         stud = Student.objects.get(hall_ticket=hall_ticket)
 
         if hall1 != hall2: #Populating the ExamInfo table
@@ -138,11 +139,12 @@ for row in range(4, sheet.nrows):
         sub_code = str(sheet.cell(row, 2).value).strip()
         sub = Subject.objects.get(subject_code=sub_code)
         #Modify the below code accordingly
-        exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=3, semester=2)
+        exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=3, semester=2, supple=False)
         exam_object.total = str(int(exam_object.total) + total_marks)
         exam_object.save()
         result = Result(subject=sub, internal_marks=int_marks, external_marks=ext_marks, results=res,
                         credits=credits, examinfo=exam_object, total=str(total_marks))
         result.save()
     except:
+        print "problem inserting details of "+hall_ticket
         print sys.exc_info()

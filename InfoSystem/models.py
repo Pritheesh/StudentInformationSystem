@@ -2,18 +2,20 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class CustomUser(AbstractUser):
     mobile = models.CharField(max_length=15)
     is_student = models.BooleanField(verbose_name="Student", default=False)
+    is_verified = models.BooleanField(verbose_name="verified", default=False)
 
 
 class Parent(models.Model):
     user = models.OneToOneField(CustomUser, null=True)
     mother_name = models.CharField(max_length=128)
     father_name = models.CharField(max_length=128)
-    mobile = models.CharField(max_length=15, unique=True)
+    mobile = models.CharField(max_length=15, null=True)
     email = models.CharField(max_length=128, null=True)
     is_registered = models.BooleanField(default=False)
 
@@ -103,16 +105,16 @@ class Result(models.Model):
 
 class AchievementInASemester(models.Model):
     rank = models.IntegerField()
-    student = models.ForeignKey(Student)
-    examinfo = models.ForeignKey(ExamInfo)
+    student = models.ForeignKey(Student, related_name='achievementinasemester')
+    examinfo = models.ForeignKey(ExamInfo, related_name='examinfo')
 
     def __unicode__(self):
         return self.student.hall_ticket+" "+self.examinfo.year_of_pursue_roman+" "+self.examinfo.semester_roman+" "+str(self.rank)
 
 class AchievementInASubject(models.Model):
     rank = models.IntegerField()
-    student = models.ForeignKey(Student)
-    result = models.ForeignKey(Result)
+    student = models.ForeignKey(Student, related_name='ach_subject')
+    result = models.ForeignKey(Result, related_name='ach_res')
     year_of_pursue_roman = models.CharField(max_length=5)
     semester_roman = models.CharField(max_length=2)
     semester = models.IntegerField()
