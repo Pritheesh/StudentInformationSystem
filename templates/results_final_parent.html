@@ -12,28 +12,12 @@
 
 
     <style type="text/css">
-        .my_container {
-            position: absolute;
-{#            z-index: 1;#}
-            visibility: visible;
+        tr:nth-child(even) {
+            background-color: cadetblue;
         }
 
-        .my_yet_other_container {
-            position: absolute;
-{#            z-index: 1;#}
-            visibility: hidden;
-        }
-
-        .my_outer_container {
-            position: absolute;
-{#            z-index: 1;#}
-            visibility: visible;
-        }
-
-        .my_other_outer_container {
-            position: absolute;
-{#            z-index: 1;#}
-            visibility: hidden;
+        tr:nth-child(odd) {
+            background-color: whitesmoke;
         }
     </style>
 </head>
@@ -120,7 +104,7 @@
                                              {% endif %}
                                             held during {{ e.month_of_year }} / {{ e.year_of_calendar }}
                                         </h4><br/>
-                                        <table class="table table-hover table-responsive table-striped main_table">
+                                        <table class="table table-hover table-responsive main_table">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Subject</th>
@@ -160,7 +144,7 @@
                                                 <h4 style="padding-left: 170px;">Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester</h4><br>
                                             {% endfor %}<br>
                                             <h4 style="text-align: center; color: #195f91">Achievements desk</h4>
-                                            <table class="table table-hover table-responsive table-striped ach_table">
+                                            <table class="table table-hover table-responsive ach_table">
                                                 <tr>
                                                     <th>Rank</th>
                                                     <th>Subject</th>

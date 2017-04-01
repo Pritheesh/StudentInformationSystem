@@ -11,7 +11,7 @@ import django
 django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
-#populating branch table
+# populating branch table
 branch = Branch(code='01', name='Civil Engineering')
 branch.save()
 branch = Branch(code='02', name='Electrical and Electronic Engineering')
@@ -103,6 +103,7 @@ months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augus
           'December']
 hall2 = ""
 for row in range(4, sheet.nrows):
+    hall_ticket = str(sheet.cell(row, 0).value).strip()
     try:
         int_marks = str(int(sheet.cell(row, 4).value))
     except:
@@ -115,15 +116,14 @@ for row in range(4, sheet.nrows):
     try:
         total_marks += int(int_marks)
     except:
-        print "the guy was absent buddy for internal"
+        print hall_ticket+" was absent for internal"
     try:
         total_marks += int(ext_marks)
     except:
-        print "the guy was absent buddy for external"
+        print hall_ticket+" was absent for external"
     res = str(sheet.cell(row, 7).value).strip()
     credits = int(sheet.cell(row, 8).value)
     try:
-        hall_ticket = str(sheet.cell(row, 0).value).strip()
         hall1 = hall_ticket
 
         # print hall_ticket, " in results table"

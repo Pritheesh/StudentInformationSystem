@@ -1,5 +1,5 @@
 from InfoSystem.models import *
-
+import sys
 
 # semester wise
 ei = ExamInfo.objects.all().filter(supple=False)
@@ -16,11 +16,14 @@ for i in range(1, 5):
             results_total= list(set(results_total))
             results_total.sort(reverse=True)
             # results_total = sorted(results_total.items(), key= lambda x:x[1], reverse=True)
-            temp = sem.filter(total=results_total[0])
-            for lmn in temp:
-                achievement_in_semester = AchievementInASemester(rank=1, student=lmn.student, examinfo=lmn)
-                achievement_in_semester.save()
-                print achievement_in_semester, lmn.total
+            try:
+                temp = sem.filter(total=results_total[0])
+                for lmn in temp:
+                    achievement_in_semester = AchievementInASemester(rank=1, student=lmn.student, examinfo=lmn)
+                    achievement_in_semester.save()
+                    print achievement_in_semester, lmn.total
+            except:
+                sys.exc_info()
 
             try:
                 temp = sem.filter(total=results_total[1])
@@ -31,6 +34,6 @@ for i in range(1, 5):
                         print achievement_in_semester, lmn.total
 
             except:
-                print "get lost"
+                sys.exc_info()
 
 

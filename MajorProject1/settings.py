@@ -47,6 +47,13 @@ INSTALLED_APPS = [
     'djoser',
 ]
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cvrresults@gmail.com'
+EMAIL_HOST_PASSWORD = 'AsdAsd!23'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 DJOSER = {
     'SERIALIZERS': {
         'user_registration': 'InfoSystem.serializers.UserRegisterSerializer',
@@ -114,9 +121,9 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'InfoSystem.CustomUser'
 
-LOGIN_REDIRECT_URL=reverse_lazy('result-view')
+LOGIN_REDIRECT_URL=reverse_lazy('email-result-view')
 
-LOGIN_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('email-login')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

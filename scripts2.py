@@ -1,4 +1,5 @@
 from InfoSystem.models import Subject, Result, AchievementInASubject
+import sys
 
 subjects = Subject.objects.all()
 
@@ -22,7 +23,7 @@ for sub in subjects:
                 print achievement.student.name, achievement.result.subject, achievement.result.total
                 # print lmn.total, lmn.subject, lmn.examinfo.student
     except:
-        print "get lost"
+       sys.exc_info()
 
     try:
         max_res = results.filter(total=sub_totals[1])
@@ -38,4 +39,4 @@ for sub in subjects:
                 print achievement.student.name, achievement.result.subject, achievement.result.total
                 # print lmn.total, lmn.subject, lmn.examinfo.student
     except:
-        print "get lost"
+        sys.exc_info()

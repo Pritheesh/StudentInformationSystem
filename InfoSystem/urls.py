@@ -16,13 +16,26 @@ urlpatterns = [
     url(r'^api/register/$', s_views.UserRegisterView.as_view(), name='api-register'),
     # url(r'^api/register/student', s_views.StudentRegisterView.as_view(), name='api-student-register'),
 
+    url(r'^register/$', views.register, name='email-register'),
+    url(r'^login/$', views.login2, name='email-login'),
+    url(r'^activation/', views.activate, name='email-activate'),
+    url(r'^results/$', login_required(views.result_view2), name='email-result-view'),
+    # url(r'^email/forgot/$', views.forgot_password, name='email-forgot'),
 
+    url(r'^password/reset/$', auth_views.password_reset,
+        {'post_reset_redirect': '/password/reset/done/'}, name='password-reset'),
+    url(r'^password/reset/done/$', auth_views.password_reset_done),
+    url(r'^password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', auth_views.password_reset_confirm,
+        {'post_reset_redirect': '/password/done/'}, name='password-reset-confirm'),
+    url(r'^password/done/$', auth_views.password_reset_complete),
     # url(r'^results/$', api_views.result_view, name='result-view'),
-    url(r'^$', views.login_view, name='login'),
-    url(r'^login/$', views.login_view, name='login'),
-    url(r'^verify/(?P<id>\S+)/$', views.otp_verify, name='otp-verify'),
-    url(r'^register/$', views.register2, name='register'),
-    url(r'^token/(?P<id>\S+)/$', views.otp_token, name='token'),
-    url(r'^results/$', login_required(views.result_view), name='result-view'),
+
+    url(r'^$', views.login2, name='email-login'),
+    url(r'^otp/login/$', views.login_view, name='login'),
+    url(r'^otp/verify/(?P<id>\S+)/$', views.otp_verify, name='otp-verify'),
+    url(r'^otp/register/$', views.register2, name='register'),
+    url(r'^otp/token/(?P<id>\S+)/$', views.otp_token, name='token'),
+    url(r'^otp/results/$', login_required(views.result_view), name='result-view'),
+
     url(r'^logout/$', views.logout_view, name='logout'),
 ]

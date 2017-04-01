@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -123,3 +123,18 @@ class AchievementInASubject(models.Model):
 
     def __unicode__(self):
         return self.student.hall_ticket+" "+self.result.subject.name+" "+str(self.rank)
+
+
+class SaltForActivation(models.Model):
+    user = models.OneToOneField(CustomUser)
+    # salt = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.user.username
+
+admin.site.register(Parent)
+admin.site.register(ExamInfo)
+admin.site.register(Subject)
+admin.site.register(AchievementInASubject)
+admin.site.register(AchievementInASemester)
+admin.site.register(Result)

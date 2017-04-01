@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">
+        body{
+{#            background-image: url("{% static 'InfoSystem/yoyo.jpeg' %}");#}
+{#            background-size: cover;#}
+{#            background-position: center;#}
+{#            background-attachment: fixed;#}
+              background-color: whitesmoke;
+        }
+
+    </style>
+</head>
+<body>
+{#<h3>Register an Account</h3>#}
+<form class="form-horizontal" style="width: 50%;margin-left: auto;margin-right: auto" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+  <fieldset>
+    <legend style="color: #204d74;font-weight: bolder;margin-bottom: 20px; padding: 20px;text-align: center">Sign Up</legend>
+{#      {% for field in form %}#}
+{#        <div class="form-group">#}
+{#            <div class="col-sm-offset-2 col-sm-10">#}
+{#                <span class="text-danger small">{{ field.errors }}</span>#}
+{#                {{ form.username.name }}#}
+{#            </div>#}
+{#            <label class="col-lg-2 control-label" >{{ field.label_tag }}</label>#}
+{#            <div class="col-lg-10">{{ field }}</div>#}
+{#        </div>#}
+{#      {% endfor %}#}
+  <div class="col-lg-10 col-lg-offset-2">
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">
+                    {% if form.errors %}
+                        {{  form.non_field_errors }}
+                    {% endif %}
+                </span>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.username.errors }}</span>
+            </div>
+            <br>
+            <label for="id_username" class="col-lg-4 control-label">Username: </label>
+              <span style="color: red">*</span>
+          <div class="col-lg-6">
+            <input type="text" class="form-control" id="id_username" name="username" placeholder="User Name" required>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.email.errors }}</span>
+            </div>
+        <label for="id_email" class="col-lg-4 control-label">Email: </label>
+              <span style="color: red">*</span>
+          <div class="col-lg-6">
+            <input type="email" class="form-control" id="id_email"  name="email" placeholder="E-mail" required>
+{#              {{ form.email }}#}
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.mobile.errors }}</span>
+            </div>
+          <label for="id_mobile" class="col-lg-4 control-label">Mobile: </label>
+              <span style="color: red">*</span>
+          <div class="col-lg-6">
+            <input type="text" class="form-control" id="id_mobile" name="mobile" placeholder="Mobile number" required>
+{#              {{ form.mobile }}#}
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.password1.errors }}</span>
+            </div>
+          <label for="id_password" class="col-lg-4 control-label">Enter Password: </label>
+              <span style="color: red">*</span>
+          <div class="col-lg-6">
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <span class="text-danger small">{{ form.password2.errors }}</span>
+            </div>
+          <label for="id_password2" class="col-lg-4 control-label">Enter Password again: </label>
+              <span style="color: red">*</span>
+          <div class="col-lg-6">
+            <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Enter Password again" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="id_isstudent" class="col-lg-4 control-label">Student? </label>
+          <div class="col-lg-6">
+            <input style="vertical-align: middle" type="checkbox"  id="id_isstudent" name="isstudent">
+          </div>
+        </div>
+
+
+      <div class="col-sm-11" align="center">
+        <button type="reset" class="btn btn-danger">Cancel</button>
+        <input type="submit" class="btn btn-success" value="Submit"/>
+      </div>
+{#    {% if form.errors %}#}
+{#    {% for field in form %}#}
+{#        {% for error in field.errors %}#}
+{#            <p> {{ error }} </p>#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
+{#    {% endif %}#}
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+  <div align="center">
+      <br><br>Already have an account? <a href="{% url 'email-login' %}">Click here</a> to log in.
+  </div>
+
+  </fieldset>
+</form>
+</body>
+</html>
