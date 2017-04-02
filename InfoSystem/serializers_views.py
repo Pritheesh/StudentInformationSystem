@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from djoser.views import RegistrationView
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
@@ -23,13 +24,16 @@ class StudentList(APIView):
         return Response({'user': serializer2.data, 'students': serializer.data})
 
 
-class UserRegisterView(CreateAPIView):
+class UserRegisterView(RegistrationView):
     model = get_user_model()
     permission_classes = (AllowAny, )
     serializer_class = UserRegisterSerializer
     def get_queryset(self):
         if self.queryset is None:
             raise Exception('User is already registered')
+
+    def send_activation_email(self, user):
+        RegistrationView.send_activation_email(self, user)
 #
 # class StudentRegisterView(CreateAPIView):
 #     permission_classes = (AllowAny, )

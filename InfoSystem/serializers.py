@@ -93,25 +93,23 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'mobile', 'password', 'is_student']
 
     def create(self, validated_data):
+        user = super(UserRegisterSerializer, self).create(validated_data)
+        user.is_active = False
         if validated_data['is_student'] is False:
             par = Parent.objects.get(mobile__exact=validated_data['mobile'])
-            user = super(UserRegisterSerializer, self).create(validated_data)
             par.user = user
             par.email = validated_data['email']
             par.is_registered=True
             par.save()
             user.set_password(validated_data['password'])
-            user.save()
-            return user
         else:
             stud = Student.objects.get(mobile__exact=validated_data['mobile'])
-            user = super(UserRegisterSerializer, self).create(validated_data)
             stud.user = user
             stud.is_registered = True
             stud.save()
             user.set_password(validated_data['password'])
-            user.save()
-            return user
+        user.save()
+        return user
 
     def validate(self, data):
         if data['is_student'] is False:

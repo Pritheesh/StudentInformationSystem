@@ -17,7 +17,6 @@ from django.urls.base import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'jntx+%9@)#(g2n@jnu+mv-cv)_g*$uuaskdy%xx&ccn=3nqg&s'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -55,6 +53,11 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'api/password/reset/confirm/?id={uid}/tok={token}',
+    'ACTIVATION_URL': 'api/activate/?id={uid}/tok={token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'SEND_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {
         'user_registration': 'InfoSystem.serializers.UserRegisterSerializer',
     },
@@ -70,7 +73,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,7 +106,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MajorProject1.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -121,7 +122,7 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'InfoSystem.CustomUser'
 
-LOGIN_REDIRECT_URL=reverse_lazy('email-result-view')
+LOGIN_REDIRECT_URL = reverse_lazy('email-result-view')
 
 LOGIN_URL = reverse_lazy('email-login')
 
@@ -143,7 +144,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -156,7 +156,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
