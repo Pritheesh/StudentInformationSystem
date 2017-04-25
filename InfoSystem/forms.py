@@ -18,6 +18,8 @@ class DocumentForm(forms.Form):
     docfile = forms.FileField(
         label='Select a file'
     )
+    sheets = forms.CharField()
+    start = forms.CharField()
 
 class ResultsForm(forms.Form):
     docfile = forms.FileField(label='Select a file')
@@ -28,6 +30,8 @@ class ResultsForm(forms.Form):
     semester_roman = forms.CharField()
     year_of_pursue = forms.CharField()
     year_of_pursue_roman = forms.CharField()
+    sheets = forms.CharField()
+    start = forms.CharField()
 
     # class Meta:
     #     fields = ('year_of_pursue', 'semester', 'year_of_pursue_roman', 'semester_roman', 'year_of_calendar',

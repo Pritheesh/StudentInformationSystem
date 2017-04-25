@@ -10,15 +10,24 @@
 </head>
 <body>
 <h2 style="color: red">Important.. Read the instructions before running the script!</h2>
-<h3>Data of all branches must be in a single sheet!</h3>
 <h3>Make sure the file has fields in order specified</h3>
-<h2>Sno,HTNo,Full Name,Admn no,Caste Category, Admn Dt,Year of Completion, DOB, Gender (0-For male, 1-for female),
+<h4>Sno,HTNo,Full Name,Admn no,Caste Category, Admn Dt,Year of Completion, DOB, Gender (0-For male, 1-for female),
     Father Name, Mother Name, Parent Mobile, Student Mobile,Email
-</h2>
-<h2>Data must start from 2nd row in the excel sheet</h2>
+</h4>
 <form class="form-horizontal" action="{% url "upload_info" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>{{ form.non_field_errors }}</p>
+
+    <div>
+        {{ form.sheets.errors }}
+        <label for="{{ form.sheets.id_for_label }}">Number of sheets: </label>
+        {{ form.sheets }}
+    </div>
+    <div>
+        {{ form.start.errors }}
+        <label for="{{ form.start.id_for_label }}">Row number from where data starts: </label>
+        {{ form.start }}
+    </div>
 
     <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
 

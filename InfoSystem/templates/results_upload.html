@@ -11,14 +11,23 @@
 <body>
 
 <h2 style="color: red">Important.. Read the instructions before running the script!</h2>
-<h4>1. Data of all branches must be in a single sheet!</h4>
-<h4>2. Make sure the file has fields in order specified</h4>
-<h4>3. HT No	Name	Sub Code	Subject	Int Marks	Ext Marks	Total	Results	Credits</h4>
-<h4>4. Results should start from row 5</h4>
+<h4>Make sure the file has fields in order specified</h4>
+<h4>HT No	Name	Sub Code	Subject	Int Marks	Ext Marks	Total	Results	Credits</h4>
 
     <form class="form-horizontal" action="{% url "upload_results" %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p>{{ form.non_field_errors }}</p>
+
+        <div>
+            {{ form.sheets.errors }}
+            <label for="{{ form.sheets.id_for_label }}">Number of sheets: </label>
+            {{ form.sheets }}
+        </div>
+        <div>
+            {{ form.start.errors }}
+            <label for="{{ form.start.id_for_label }}">Row number from where data starts: </label>
+            {{ form.start }}
+        </div>
 
         <div class="fieldWrapper">
             {{ form.year_of_calendar.errors }}

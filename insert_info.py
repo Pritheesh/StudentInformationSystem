@@ -9,7 +9,7 @@ django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
 
-def insert_info(doc):
+def insert_info(doc, sheets, start):
 
     # populating branch table
     branch = Branch(code='01', name='Civil Engineering')
@@ -30,9 +30,9 @@ def insert_info(doc):
     book = xlrd.open_workbook(doc.docfile.name)
 
     # inserting parent data and 7 indicates the number of sheets separated by branches
-    for i in range(0, 7):
+    for i in range(0, sheets):
         sheet = book.sheet_by_index(i)
-        for row in range(5, sheet.nrows):
+        for row in range(start, sheet.nrows):
             father_name = str(sheet.cell(row, 9).value).strip().title()
             try:
                 father_mobile = str(int(sheet.cell(row, 11).value)).strip()
