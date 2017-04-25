@@ -162,6 +162,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 OTP_TWILIO_ACCOUNT = 'AC389a717f7b9ed58e21b14299e387a684'
 OTP_TWILIO_AUTH = 'cea7fbda1c900d3a216b6a2d0f10cac9'
 OTP_TWILIO_FROM = '+12052911431'

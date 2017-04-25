@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{#    <link rel="stylesheet" href="{% static 'InfoSystem/bootstrap.css' %}">#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Links page for admin</title>
+</head>
+<body>
+<h2 style="color: red">Important.. Read the instructions before running the script!</h2>
+<h3>Data of all branches must be in a single sheet!</h3>
+<h3>Make sure the file has fields in order specified</h3>
+<h2>Sno,HTNo,Full Name,Admn no,Caste Category, Admn Dt,Year of Completion, DOB, Gender (0-For male, 1-for female),
+    Father Name, Mother Name, Parent Mobile, Student Mobile,Email
+</h2>
+<h2>Data must start from 2nd row in the excel sheet</h2>
+<form class="form-horizontal" action="{% url "upload_info" %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ form.non_field_errors }}</p>
+
+    <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+    <p>
+        {{ form.docfile.errors }}
+        {{ form.docfile }}
+    </p>
+
+    <input class="btn-primary" type="submit" value="Upload"/>
+</form>
+
+</body>
+</html>

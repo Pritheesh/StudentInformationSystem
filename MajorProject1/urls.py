@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('InfoSystem.urls')),
-    url(r'^api/', include('djoser.urls.authtoken', namespace='djoser'))
+from InfoSystem.admin_views import upload_info, display_links, upload_results
 
+urlpatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('InfoSystem.urls')),
+    url(r'^api/', include('djoser.urls.authtoken', namespace='djoser')),
+    url(r'^admin/links/$', display_links, name='links'),
+    url(r'^admin/info/$', upload_info, name='upload_info'),
+    url(r'^admin/results/$', upload_results, name='upload_results'),
 ]

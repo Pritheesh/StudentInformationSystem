@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{#    <link rel="stylesheet" href="{% static 'InfoSystem/bootstrap.css' %}">#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Links page for admin</title>
+</head>
+<body>
+
+<h2 style="color: red">Important.. Read the instructions before running the script!</h2>
+<h4>1. Data of all branches must be in a single sheet!</h4>
+<h4>2. Make sure the file has fields in order specified</h4>
+<h4>3. HT No	Name	Sub Code	Subject	Int Marks	Ext Marks	Total	Results	Credits</h4>
+<h4>4. Results should start from row 5</h4>
+
+    <form class="form-horizontal" action="{% url "upload_results" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+
+        <div class="fieldWrapper">
+            {{ form.year_of_calendar.errors }}
+            <label for="{{ form.year_of_calendar.id_for_label }}">Year [E.g. 2017] </label>
+            {{ form.year_of_calendar }}
+        </div>
+        <div>
+            {{ form.month_of_year.errors }}
+            <label for="{{ form.month_of_year.id_for_label }}">Month [E. g. April] </label>
+            {{ form.month_of_year }}
+        </div>
+        <div>
+            {{ form.year_of_pursue.errors }}
+            <label for="{{ form.year_of_pursue.id_for_label }}">Year of Pursue [E.g. 2 if 2nd year]</label>
+            {{ form.year_of_pursue }}
+        </div>
+        <div>
+            {{ form.semester.errors }}
+            <label for="{{ form.semester.id_for_label }}">Semester [E.g. 2 if 2nd semester] </label>
+            {{ form.semester }}
+        </div>
+        <div>
+            {{ form.year_of_pursue_roman.errors }}
+            <label for="{{ form.year_of_pursue_roman.id_for_label }}">Year of Pursue in Roman [E.g. II if 2nd year] </label>
+            {{ form.year_of_pursue_roman }}
+        </div>
+        <div>
+            {{ form.semester_roman.errors }}
+            <label for="{{ form.semester_roman.id_for_label }}">Semester [E.g. II if 2nd semester] </label>
+            {{ form.semester_roman }}
+        </div>
+        <div>
+            {{ form.is_supple.errors }}
+            <label for="{{ form.is_supple.id_for_label }}">Supple? [0 if main, 1 if supple] </label>
+            {{ form.is_supple }}
+        </div>
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }}
+        </p>
+
+        <input class="btn-primary" type="submit" value="Upload"/>
+    </form>
+</body>
+</html>

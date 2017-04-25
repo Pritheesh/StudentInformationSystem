@@ -1,10 +1,16 @@
 from __future__ import unicode_literals
 
+import os
+
 from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 # Create your models here.
+from MajorProject1 import settings
+
+
 class CustomUser(AbstractUser):
     mobile = models.CharField(max_length=15)
     is_student = models.BooleanField(verbose_name="Student", default=False)
@@ -131,6 +137,14 @@ class SaltForActivation(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+class Document(models.Model):
+    docfile = models.FileField()
+
+    def delete(self, using=None, keep_parents=False):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.docfile.name))
+        return super(Document, self).delete(using, keep_parents)
+
 
 admin.site.register(Parent)
 admin.site.register(ExamInfo)

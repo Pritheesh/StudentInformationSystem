@@ -3,6 +3,7 @@ import random
 import smtplib
 import base64
 # import threading
+import threading
 
 from collections import OrderedDict
 from email.mime.multipart import MIMEMultipart
@@ -90,8 +91,10 @@ def register(request):
             user.save()
             id = user.id
             email = user.email
-            # threading.Thread(target=send_email(email, id, user)).start()
-            send_email(email, id, user)
+            thread = threading.Thread(target=send_email, args=(email, id, user))
+            thread.setDaemon(True)
+            thread.start()
+            # send_email(email, id, user)
             return render(request, 'thankyou.html')
     context = {}
     context.update(csrf(request))

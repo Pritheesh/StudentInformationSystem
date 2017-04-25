@@ -9,9 +9,30 @@ from django.core import exceptions
 from django.core.validators import validate_email
 from django.forms.models import ModelForm
 
-from InfoSystem.models import Student, Parent
+from InfoSystem.models import Student, Parent, ExamInfo
 from .models import CustomUser
 
+
+
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file'
+    )
+
+class ResultsForm(forms.Form):
+    docfile = forms.FileField(label='Select a file')
+    is_supple = forms.CharField(label='0 for main, 1 for supple')
+    year_of_calendar = forms.CharField()
+    month_of_year = forms.CharField()
+    semester = forms.CharField()
+    semester_roman = forms.CharField()
+    year_of_pursue = forms.CharField()
+    year_of_pursue_roman = forms.CharField()
+
+    # class Meta:
+    #     fields = ('year_of_pursue', 'semester', 'year_of_pursue_roman', 'semester_roman', 'year_of_calendar',
+    #               'month_of_year', 'is_supple')
+    # pass
 
 class UserForm(forms.Form):
     email = forms.EmailField()
