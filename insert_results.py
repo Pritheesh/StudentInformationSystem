@@ -1,8 +1,11 @@
 import sys
+import threading
 
 import xlrd
 
 from InfoSystem.models import Subject, Student, Result, ExamInfo
+from insert_ach_in_sem import insert_sem_ach
+from insert_ach_in_sub import insert_sub_ach
 
 
 def insert_results(doc, examinfo, sheets, start):
@@ -78,4 +81,14 @@ def insert_results(doc, examinfo, sheets, start):
                 print "------------PROBLEM INSERTING DETAILS OF "+hall_ticket+"--------------"
                 print sys.exc_info()
     print "------------FINISHED INSERTING RESULTS------------"
+    thread = threading.Thread(target=insert_sem_ach, args=(examinfo.year_of_pursue, examinfo.year_of_calendar,
+                                                           examinfo.semester, examinfo.month_of_year))
+    thread.setDaemon(True)
+    thread.start()
+
+    thread = threading.Thread(target=insert_sub_ach, args=(examinfo.year_of_pursue, examinfo.year_of_calendar,
+                                                           examinfo.semester, examinfo.month_of_year))
+    thread.setDaemon(True)
+    thread.start()
+
     doc.delete()

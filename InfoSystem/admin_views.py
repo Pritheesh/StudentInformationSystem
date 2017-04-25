@@ -13,14 +13,14 @@ from insert_results import insert_results
 
 
 def display_links(request):
-    # if not request.user.is_authenticated():
-    #     return HttpResponseRedirect(reverse('admin:login'))
+    if not request.user.is_superuser:
+        return HttpResponseRedirect(reverse('admin:login'))
     return render(request, 'links.html')
 
 
 def upload_info(request):
-    # if not request.user.is_authenticated():
-    #     return HttpResponseRedirect(reverse('admin:login'))
+    if not request.user.is_superuser:
+        return HttpResponseRedirect(reverse('admin:login'))
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -39,8 +39,8 @@ def upload_info(request):
     return render(request, 'stud_par_info.html', {'form': form})
 
 def upload_results(request):
-    # if not request.user.is_authenticated():
-    #     return HttpResponseRedirect(reverse('admin:login'))
+    if not request.user.is_superuser:
+        return HttpResponseRedirect(reverse('admin:login'))
     if request.method == 'POST':
         form = ResultsForm(request.POST, request.FILES)
         if form.is_valid():
