@@ -26,9 +26,9 @@
     <div class="container-fluid" style="padding-left: 125px">
         <img style="height: 100px ;width: 100px; float: left" src="{% static "InfoSystem/cvr_logo_400x400.png" %}">
         <div style="float: right; font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
-            <h3 style="color: white; margin-top: 15px; margin-bottom: 0;  padding-right: 140px">CVR COLLEGE OF ENGINEERING</h3>
-            <h4 style="color: white; margin-top: 0; margin-bottom: 0; padding-left: 160px">In Pursuit of Excellence</h4>
-            <h5 style="color: white; margin-top: 5px; padding-left: 55px">(An Autonomous Institution, NAAC 'A' Grade)</h5>
+            <h3 style="color: white; margin-top: 15px; text-align: center; margin-bottom: 0;  padding-right: 100px">CVR COLLEGE OF ENGINEERING</h3>
+            <h4 style="color: white; margin-top: 0; text-align: center; margin-bottom: 0; padding-right: 100px">In Pursuit of Excellence</h4>
+            <h5 style="color: white; margin-top: 5px; text-align: center; padding-right: 100px">(An Autonomous Institution, NAAC 'A' Grade)</h5>
         </div>
     </div>
 </nav>
@@ -40,15 +40,15 @@
         <span class="glyphicon glyphicon-log-out" style="color: black;"></span><span style="font-weight: bolder">Logout</span></a>
 </div>
     <div class="container main_table">
-        <h4 style="color: #204d74">Your Details</h4>
-        <h4>Father : {{ parent.father_name }}</h4>
-        <h4>Mother : {{ parent.mother_name }}</h4>
-        <h4>Mobile : {{ parent.mobile }}</h4>
-    </div>
-    <div class="container">
-    </div>
+        <h4 style="color: #204d74; text-align: center">Your Details</h4>
+
+        <h4 style="float: left">Father : {{ parent.father_name }}</h4>
+            <h4 style="float: right">Mother : {{ parent.mother_name }}</h4><br>
+        <h4 style="clear: left">Mobile : {{ parent.mobile }}</h4>
+    </div><br>
     <div>
-        <div class="container main_table" id="buttons">
+        {% if students|get_length > 1 %}
+        <div class="container main_table" id="buttons" style="margin-left: 55px">
             {% for student in students %}
                 <button class="btn btn-success"
                         id="button{{ forloop.counter }}"
@@ -57,7 +57,8 @@
                 </button>
                 {% endfor %}
         </div>
-        <div class="container" style="position: relative">
+        {% endif %}
+        <div class="container" style="position: relative; margin-left: 55px">
             {% for student, examinfo in my_dict.items %}
                 <div class="
                     {% if forloop.counter0 == 0 %}
@@ -69,10 +70,11 @@
                         id="div{{ forloop.counter }}">
                     <div>
                         <div class="container main_table">
-                            <h4 style="color: #204d74">Details</h4>
-                            <h4>Name : {{ student.name }}</h4>
-                            <h4>Roll No : {{ student.hall_ticket }}</h4>
-                            <h4>Branch : {{ student.branch }}</h4>
+                            <h4 style="color: #204d74;text-align: center">Your ward Details</h4>
+                            <h4 style="float: left">Name : {{ student.name }}</h4>
+                            <h4 style="float: right">Roll No : {{ student.hall_ticket }}</h4>
+                            <h4 style="float: left">Branch : {{ student.branch }}</h4>
+                            <h4 style="float: right">Gender: {{ student.gender }}</h4>
                         </div>
                         <div >
                             <div class="container" id="buttons" style="padding-left: 190px" >
@@ -104,7 +106,7 @@
                                                  {% else %}
                                                  Supple
                                              {% endif %}
-                                            held during {{ e.month_of_year }} / {{ e.year_of_calendar }}
+                                            Exam held during {{ e.month_of_year }} / {{ e.year_of_calendar }}
                                         </h4><br/>
                                         <table class="table table-hover table-responsive main_table">
                                             <tr>

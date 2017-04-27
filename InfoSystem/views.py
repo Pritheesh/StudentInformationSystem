@@ -31,6 +31,11 @@ def get_list(li, index):
     return li[index]
 
 
+@register.filter
+def get_length(items):
+    return len(items)
+
+
 def register2(request):
     if request.method == 'POST':
         form = UserRegistrationForm2(request.POST)
