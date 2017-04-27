@@ -41,9 +41,9 @@
     <div class="container-fluid" style="padding-left: 125px">
         <img style="height: 100px;width: 100px;float: left" src="{% static "InfoSystem/cvr_logo_400x400.png" %}">
         <div style="float: right; font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
-            <h3 style="color: white; margin-top: 15px; margin-bottom: 0;  padding-right: 140px">CVR COLLEGE OF ENGINEERING</h3>
-            <h4 style="color: white; margin-top: 0; margin-bottom: 0; padding-left: 160px">In Pursuit of Excellence</h4>
-            <h5 style="color: white;margin-top: 5px; padding-left: 55px">(An Autonomous Institution, NAAC 'A' Grade)</h5>
+            <h3 style="color: white; margin-top: 15px; text-align: center; margin-bottom: 0;  padding-right: 100px">CVR COLLEGE OF ENGINEERING</h3>
+            <h4 style="color: white; margin-top: 0; text-align: center; margin-bottom: 0; padding-right: 100px">In Pursuit of Excellence</h4>
+            <h5 style="color: white; margin-top: 5px; text-align: center; padding-right: 100px">(An Autonomous Institution, NAAC 'A' Grade)</h5>
         </div>
     </div>
 </nav>
@@ -52,7 +52,7 @@
     <a style="color: black" href="{% url 'logout' %}">
         <span class="glyphicon glyphicon-log-out" style="color: black;"></span><span style="font-weight: bolder">Logout</span></a>
 </div>
-    <div class="container main_table">
+    <div class="container main_table" style="padding-left: 0">
         <h3 style="color: #204d74">Your details</h3>
         <h4>Name: {{ students.0.name }}</h4>
         <h4>Roll No: {{ students.0.hall_ticket }} </h4>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="container">
-        <div class="container main_table" id="buttons">
+        <div class="container main_table" id="buttons" style="padding-left: 0">
             {% for key, value in stud_res_dict %}
                 {#                {% for i in num_buttons %}#}
                 <button class="btn btn-success"
@@ -88,7 +88,8 @@
                     my_yet_other_container
                  {% endif %}
                   "
-                 id="div{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}">
+                 id="div{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}"
+                style="padding-left: 0; margin-left: -6px">
                 {% for ei in examinfo %}
 {#                    {{ sem_dict.keys }}#}
 {#                    <h5 style="float: left">Examination </h5>#}

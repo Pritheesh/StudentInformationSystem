@@ -39,11 +39,11 @@ def insert_results(doc, examinfo, sheets, start):
             try:
                 total_marks += int(int_marks)
             except:
-                print hall_ticket+" was absent for internal"
+                print hall_ticket+" was absent for internal "+str(sheet.cell(row, 2).value)
             try:
                 total_marks += int(ext_marks)
             except:
-                print hall_ticket+" was absent for external"
+                print hall_ticket+" was absent for external"+str(sheet.cell(row, 3).value)
             res = str(sheet.cell(row, 7).value).strip()
             credits = int(sheet.cell(row, 8).value)
             try:

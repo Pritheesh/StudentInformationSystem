@@ -124,6 +124,8 @@ AUTH_USER_MODEL = 'InfoSystem.CustomUser'
 
 LOGIN_REDIRECT_URL = reverse_lazy('email-result-view')
 
+ADMIN_LOGIN_REDIRECT_URL = reverse_lazy('links')
+
 LOGIN_URL = reverse_lazy('email-login')
 
 # Password validation
