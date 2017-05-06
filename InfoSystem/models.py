@@ -28,9 +28,12 @@ class Parent(models.Model):
     def __unicode__(self):
         return self.father_name
 
+    class Meta:
+        unique_together = ('mother_name', 'father_name', 'mobile')
+
 
 class Branch(models.Model):
-    code = models.CharField(max_length=2)
+    code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=64)
 
     def __unicode__(self):
@@ -47,6 +50,7 @@ class Student(models.Model):
     mobile = models.CharField(max_length=15, null=True)
     email = models.CharField(max_length=128, null=True)
     is_registered = models.BooleanField(default=False)
+    cgpa = models.CharField(max_length=10, default='0')
 
     def __unicode__(self):
         return self.hall_ticket
@@ -82,7 +86,7 @@ class ExamInfo(models.Model):
     year_of_calendar = models.IntegerField()
     month_of_year = models.CharField(max_length=15)
     supple = models.BooleanField()
-    total = models.CharField(max_length=3, default='0')
+    total = models.CharField(max_length=5, default='0')
 
     def __unicode__(self):
         if self.supple == False:
@@ -152,3 +156,4 @@ admin.site.register(Subject)
 admin.site.register(AchievementInASubject)
 admin.site.register(AchievementInASemester)
 admin.site.register(Result)
+# admin.site.unregister(Group)

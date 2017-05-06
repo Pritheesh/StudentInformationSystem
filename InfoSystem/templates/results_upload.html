@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h2 style="color: red">Important.. Read the instructions before running the script!</h2>
+<h3 style="color: red">Important.. Read the instructions before running the script!</h3>
 <h4>Make sure the file has fields in order specified</h4>
 <h4>HT No	Name	Sub Code	Subject	Int Marks	Ext Marks	Total	Results	Credits</h4>
 
@@ -27,6 +27,11 @@
             {{ form.start.errors }}
             <label for="{{ form.start.id_for_label }}">Row number from where data starts: </label>
             {{ form.start }}
+        </div>
+        <div>
+            {{ form.batch.errors }}
+            <label for="{{ form.batch.id_for_label }}">Batch [0 if before 15, 1 if after or 15] </label>
+            {{ form.batch }}
         </div>
 
         <div class="fieldWrapper">

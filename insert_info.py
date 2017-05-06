@@ -1,3 +1,5 @@
+from django.db import IntegrityError
+
 import xlrd
 from InfoSystem.models import Parent, Student, Subject, Result, ExamInfo, Branch
 from MajorProject1 import settings
@@ -12,22 +14,24 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MajorProject1.settings")
 def insert_info(doc, sheets, start):
 
     # populating branch table
-    branch = Branch(code='01', name='Civil Engineering')
-    branch.save()
-    branch = Branch(code='02', name='Electrical and Electronic Engineering')
-    branch.save()
-    branch = Branch(code='03', name='Mechanical Engineering')
-    branch.save()
-    branch = Branch(code='04', name='Electronic and Communication Engineering')
-    branch.save()
-    branch = Branch(code='05', name='Computer Science Engineering')
-    branch.save()
-    branch = Branch(code='10', name='Electronic and Instrumentation Engineering')
-    branch.save()
-    branch = Branch(code='12', name='Information Technology')
-    branch.save()
-
-    book = xlrd.open_workbook(doc.docfile.name)
+    try:
+        branch = Branch(code='01', name='Civil Engineering')
+        branch.save()
+        branch = Branch(code='02', name='Electrical and Electronic Engineering')
+        branch.save()
+        branch = Branch(code='03', name='Mechanical Engineering')
+        branch.save()
+        branch = Branch(code='04', name='Electronic and Communication Engineering')
+        branch.save()
+        branch = Branch(code='05', name='Computer Science Engineering')
+        branch.save()
+        branch = Branch(code='10', name='Electronic and Instrumentation Engineering')
+        branch.save()
+        branch = Branch(code='12', name='Information Technology')
+        branch.save()
+    except:
+        pass
+    book = xlrd.open_workbook(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))
 
     # inserting parent data and 7 indicates the number of sheets separated by branches
     for i in range(0, sheets):
@@ -44,7 +48,10 @@ def insert_info(doc, sheets, start):
                 par = Parent(father_name=father_name, mobile=father_mobile, mother_name=mother_name)
                 par.save()
                 print "Inserted details of parent - " + father_name
-            except:
+            except IntegrityError:
+                par = Parent.objects.get(mobile=father_mobile)
+            except Exception as e:
+                print e
                 print "-------PROBLEM IN INSERTING PARENT INFO OF " + father_name+"-----------"
 
     # populate student table
@@ -82,4 +89,4 @@ def insert_info(doc, sheets, start):
             print "student: ", name
 
     print "------------FINISHED INSERTING INFORMATION------------"
-    doc.delete()
+    os.remove(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))

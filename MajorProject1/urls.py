@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 from InfoSystem.admin_views import upload_info, display_links, upload_results
 
@@ -25,4 +27,4 @@ urlpatterns = [
     url(r'^admin/links/$', display_links, name='links'),
     url(r'^admin/info/$', upload_info, name='upload_info'),
     url(r'^admin/results/$', upload_results, name='upload_results'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

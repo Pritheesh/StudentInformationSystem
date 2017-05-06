@@ -1,29 +1,31 @@
+import os
 import sys
 import threading
 
 import xlrd
 
 from InfoSystem.models import Subject, Student, Result, ExamInfo
+from MajorProject1 import settings
+
 from insert_ach_in_sem import insert_sem_ach
 from insert_ach_in_sub import insert_sub_ach
 
 
-def insert_results(doc, examinfo, sheets, start):
-    book = xlrd.open_workbook(doc.docfile.name)
-    sheet = book.sheet_by_index(0)
-
-    #subject table
+def insert_results1(doc, examinfo, sheets, start):
+    book = xlrd.open_workbook(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))
+    # subject table
     for i in range(sheets):
+        sheet = book.sheet_by_index(i)
         for row in range(start, sheet.nrows):
             sub_code = str(sheet.cell(row, 2).value).strip()
             sub_name = str(sheet.cell(row, 3).value).strip()
             sub = Subject.objects.filter(subject_code=sub_code)
-            if sub.count()==0:
+            if sub.count() == 0:
                 sub = Subject(subject_code=sub_code, name=sub_name)
                 sub.save()
-                print "Inserted "+sub_name
+                print "Inserted " + sub_name
 
-        #results
+        # results
         hall2 = ""
         for row in range(start, sheet.nrows):
             hall_ticket = str(sheet.cell(row, 0).value).strip()
@@ -39,11 +41,11 @@ def insert_results(doc, examinfo, sheets, start):
             try:
                 total_marks += int(int_marks)
             except:
-                print hall_ticket+" was absent for internal "+str(sheet.cell(row, 2).value)
+                print hall_ticket + " was absent for internal " + str(sheet.cell(row, 2).value)
             try:
                 total_marks += int(ext_marks)
             except:
-                print hall_ticket+" was absent for external"+str(sheet.cell(row, 3).value)
+                print hall_ticket + " was absent for external" + str(sheet.cell(row, 3).value)
             res = str(sheet.cell(row, 7).value).strip()
             credits = int(sheet.cell(row, 8).value)
             try:
@@ -52,7 +54,7 @@ def insert_results(doc, examinfo, sheets, start):
                 # print hall_ticket, " in results table"
                 stud = Student.objects.get(hall_ticket=hall_ticket)
 
-                if hall1 != hall2: #Populating the ExamInfo table
+                if hall1 != hall2:  # Populating the ExamInfo table
                     exam_object = ExamInfo(year_of_calendar=examinfo.year_of_calendar,
                                            month_of_year=examinfo.month_of_year,
                                            year_of_pursue_roman=examinfo.year_of_pursue_roman,
@@ -67,9 +69,10 @@ def insert_results(doc, examinfo, sheets, start):
 
                 sub_code = str(sheet.cell(row, 2).value).strip()
                 sub = Subject.objects.get(subject_code=sub_code)
-                #Modify the below code accordingly
+                # Modify the below code accordingly
                 if not examinfo.supple:
-                    exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=examinfo.year_of_pursue, semester=examinfo.semester,
+                    exam_object = ExamInfo.objects.get(student=stud, year_of_pursue=examinfo.year_of_pursue,
+                                                       semester=examinfo.semester,
                                                        supple=False)
                     exam_object.total = str(int(exam_object.total) + total_marks)
                     exam_object.save()
@@ -78,7 +81,7 @@ def insert_results(doc, examinfo, sheets, start):
                 result.save()
                 print "Inserted results of ", hall_ticket
             except:
-                print "------------PROBLEM INSERTING DETAILS OF "+hall_ticket+"--------------"
+                print "------------PROBLEM INSERTING DETAILS OF " + hall_ticket + "--------------"
                 print sys.exc_info()
     print "------------FINISHED INSERTING RESULTS------------"
     thread = threading.Thread(target=insert_sem_ach, args=(examinfo.year_of_pursue, examinfo.year_of_calendar,
@@ -91,4 +94,62 @@ def insert_results(doc, examinfo, sheets, start):
     thread.setDaemon(True)
     thread.start()
 
-    doc.delete()
+    os.remove(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))
+
+
+def insert_results2(doc, examinfo, sheets, start):
+    book = xlrd.open_workbook(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))
+
+    for i in range(sheets):
+        sheet = book.sheet_by_index(i)
+        # inserting subjects
+        for col in range(4, sheet.ncols):
+            sub_code = str(sheet.cell(start, col).value).strip()
+            sub_name = str(sheet.cell(start + 1, col).value).strip()
+            sub = Subject.objects.filter(subject_code=sub_code)
+            if sub.count() == 0:
+                sub = Subject(subject_code=sub_code, name=sub_name)
+                sub.save()
+                print "Inserted " + sub_name
+
+        for row in range(start + 3, sheet.nrows-2):
+            try:
+                hall_ticket = str(sheet.cell(row, 0).value).strip()
+                stud = Student.objects.get(hall_ticket=hall_ticket)
+            except:
+                print sys.exc_info()
+            try:
+                stud.cgpa = str(sheet.cell(row, 3).value).strip()
+                stud.save()
+            except:
+                print sys.exc_info()
+            try:
+                sgpa = str(sheet.cell(row, 2).value).strip()
+
+                exam_object = ExamInfo(year_of_calendar=examinfo.year_of_calendar,
+                                       month_of_year=examinfo.month_of_year,
+                                       year_of_pursue_roman=examinfo.year_of_pursue_roman,
+                                       semester_roman=examinfo.semester_roman,
+                                       year_of_pursue=examinfo.year_of_pursue,
+                                       semester=examinfo.semester,
+                                       supple=examinfo.supple,
+                                       student=stud,
+                                       total=sgpa)
+                exam_object.save()
+                for col in range(4, sheet.ncols):
+                    sub_code = str(sheet.cell(start, col).value).strip()
+                    sub = Subject.objects.get(subject_code=sub_code)
+                    grade = str(sheet.cell(row, col).value).strip()
+                    if grade != 'F':
+                        res = 'PASS'
+                    else:
+                        res = 'FAIL'
+                    result = Result(subject=sub, internal_marks=grade, results=res, credits=4, examinfo=exam_object)
+                    result.save()
+                print "Inserted results of ", hall_ticket
+            except:
+                print "------------PROBLEM INSERTING DETAILS OF " + hall_ticket + "--------------"
+                print sys.exc_info()
+    print "------------FINISHED INSERTING RESULTS------------"
+
+    os.remove(os.path.join(settings.MEDIA_ROOT, doc.docfile.name))

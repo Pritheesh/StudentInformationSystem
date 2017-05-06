@@ -35,6 +35,13 @@ def get_list(li, index):
 def get_length(items):
     return len(items)
 
+@register.filter
+def get_batch(stud):
+    hall = int(stud.hall_ticket[:2])
+    if hall < 15:
+        return 0
+    return 1
+
 
 def register2(request):
     if request.method == 'POST':
@@ -332,6 +339,7 @@ def result_view2(request):
     students = []
     if user.is_student is True:
         students.append(Student.objects.get(user=user))
+        hall_ticket = int(students[0].hall_ticket[:2])
         exam_info = students[0].examinfo.all().order_by('year_of_pursue', 'semester')
         stud_res_dict = {}
         for ei in exam_info:
@@ -339,6 +347,11 @@ def result_view2(request):
             print index
             stud_res_dict.setdefault(index, []).append(ei)
         # num_buttons = len(examinfo)
+        if hall_ticket > 15:
+            batch = 1
+            return render(request, 'results_final_student.html',
+                          {'students': students, 'stud_res_dict': sorted(stud_res_dict.iteritems()), 'batch ':batch })
+        batch = 0
         sem_achievements = students[0].achievementinasemester.all()
         sem_dict = {}
         for ach in sem_achievements:
@@ -351,7 +364,7 @@ def result_view2(request):
             sub_dict.setdefault(index, []).append(ach)
         return render(request, 'results_final_student.html',
                       {'students': students, 'stud_res_dict': sorted(stud_res_dict.iteritems()),
-                       'sem_dict': sem_dict, 'sub_dict': sub_dict})
+                       'sem_dict': sem_dict, 'sub_dict': sub_dict, 'batch': batch})
 
     par = Parent.objects.get(user=user)
     students = par.student_set.all()
@@ -372,19 +385,21 @@ def result_view2(request):
         list_of_dicts.append(temp)
 
         sem_dict = {}
-        sem_achievements = student.achievementinasemester.all()
-        for ach in sem_achievements:
-            index = 'sem' + str((ach.examinfo.year_of_pursue - 1) * 2 + ach.examinfo.semester)
-            sem_dict.setdefault(index, []).append(ach)
-        list_of_sem[student] = sem_dict
-        print list_of_sem
-        sub_achievements = student.ach_subject.all()
-        sub_dict = {}
-        for ach in sub_achievements:
-            index = 'sem' + str((ach.year_of_pursue - 1) * 2 + ach.semester)
-            sub_dict.setdefault(index, []).append(ach)
-        list_of_subs[student] = sub_dict
-        print list_of_subs
+        hall = int(student.hall_ticket[:2])
+        if hall < 15:
+            sem_achievements = student.achievementinasemester.all()
+            for ach in sem_achievements:
+                index = 'sem' + str((ach.examinfo.year_of_pursue - 1) * 2 + ach.examinfo.semester)
+                sem_dict.setdefault(index, []).append(ach)
+            list_of_sem[student] = sem_dict
+            print list_of_sem
+            sub_achievements = student.ach_subject.all()
+            sub_dict = {}
+            for ach in sub_achievements:
+                index = 'sem' + str((ach.year_of_pursue - 1) * 2 + ach.semester)
+                sub_dict.setdefault(index, []).append(ach)
+            list_of_subs[student] = sub_dict
+            print list_of_subs
     for stud, ei in zip(students, list_of_dicts):
         my_dict[stud] = ei
     print my_dict

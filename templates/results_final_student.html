@@ -53,11 +53,11 @@
         <span class="glyphicon glyphicon-log-out" style="color: black;"></span><span style="font-weight: bolder">Logout</span></a>
 </div>
     <div class="container main_table" style="padding-left: 0">
-        <h3 style="color: #204d74">Your details</h3>
-        <h4>Name: {{ students.0.name }}</h4>
-        <h4>Roll No: {{ students.0.hall_ticket }} </h4>
-        <h4>Branch: {{ students.0.branch }} </h4>
-        <h4>
+        <h3 style="color: #204d74;text-align: center">Your details</h3>
+        <h4 style="float: left">Name: {{ students.0.name }}</h4>
+        <h4 style="float: right">Roll No: {{ students.0.hall_ticket }} </h4>
+        <h4 style="clear: left; float: left">Branch: {{ students.0.branch }} </h4>
+        <h4 style="float: right">
             {% if students.0.gender == "MALE" %}
                 S/o
             {% else %}
@@ -89,7 +89,7 @@
                  {% endif %}
                   "
                  id="div{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}"
-                style="padding-left: 0; margin-left: -6px">
+                style="padding-left: 0; margin-left: -7px">
                 {% for ei in examinfo %}
 {#                    {{ sem_dict.keys }}#}
 {#                    <h5 style="float: left">Examination </h5>#}
@@ -103,6 +103,7 @@
                         {% endif %}
                         held during {{ ei.month_of_year }} / {{ ei.year_of_calendar }}
                     </h4><br/>
+                    {% if batch == 0 %}
                     <table class="table table-hover table-responsive main_table">
                         <tr>
                             <th>#</th>
@@ -127,17 +128,6 @@
                         {% endfor %}
                     </table><br/>
                     <h4 style="text-align: right;padding-right: 250px;color: #195f91">Total Marks: {{ ei.total }}</h4>
-{#                    {% if ei.supple == False %}#}
-{#                        <h4 id="div_total{{ examinfo.0.year_of_pursue }}{{ examinfo.0.semester }}"#}
-{#                            style="padding-left: 755px;color: #195f91">Percentage: </h4>#}
-{#                        <label style="padding-left: 190px" for="total">Enter Total </label>#}
-{#                        <input type="text" id="total">#}
-{#                        <button id="id_total"#}
-{#                                class="btn btn-primary"#}
-{#                                onclick="calcPercentage({{ ei.total }}, {{ examinfo.0.year_of_pursue }}, {{ examinfo.0.semester }})">#}
-{#                                Calculate Percentage#}
-{#                        </button>#}
-{#                    {% endif %}#}
                     {% if ei.supple == False and sem_dict %}
                         <h3 style="padding-left: 170px;color: #204d74;">Achievements: </h3>
 
@@ -157,6 +147,36 @@
                                 </tr>
                             {% endfor %}
                         </table><br>
+                    {% endif %}
+                        {% else %}
+                            <table class="table table-hover table-responsive main_table">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Subject</th>
+                                    <th>Grade</th>
+                                    <th>Status</th>
+                                    <th>Credits</th>
+                                </tr>
+                                {% for result in ei.result.all %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ result.subject }}</td>
+                                    <td>{{ result.internal_marks }}</td>
+                                    <td>{{ result.results }}</td>
+                                    <td>{{ result.credits }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table><br>
+                            <table class="table main_table table-bordered">
+                                <tr>
+                                    <td>SGPA</td>
+                                    <td>{{ ei.total }}</td>
+                                </tr>
+                                <tr>
+                                    <td>CGPA</td>
+                                    <td>{{ students.0.cgpa }}</td>
+                                </tr>
+                            </table>
                     {% endif %}
                 {% endfor %}
             </div>

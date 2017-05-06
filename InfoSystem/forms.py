@@ -32,6 +32,7 @@ class ResultsForm(forms.Form):
     year_of_pursue_roman = forms.CharField()
     sheets = forms.CharField()
     start = forms.CharField()
+    batch = forms.CharField()
 
     # class Meta:
     #     fields = ('year_of_pursue', 'semester', 'year_of_pursue_roman', 'semester_roman', 'year_of_calendar',

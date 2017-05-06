@@ -33,32 +33,32 @@
     </div>
 </nav>
 
-<div style="position: relative">
+<div class="main_table" style="position: relative">
 
-<div class="main_table" align="right">
-    <a style="color: black" href="{% url 'logout' %}">
-        <span class="glyphicon glyphicon-log-out" style="color: black;"></span><span style="font-weight: bolder">Logout</span></a>
-</div>
-    <div class="container main_table">
+    <div class="" align="right">
+        <a style="color: black" href="{% url 'logout' %}">
+            <span class="glyphicon glyphicon-log-out" style="color: black;"></span><span style="font-weight: bolder">Logout</span>
+        </a>
+    </div>
+    <div class="container main_table" style="padding-left: 0">
         <h4 style="color: #204d74; text-align: center">Your Details</h4>
-
         <h4 style="float: left">Father : {{ parent.father_name }}</h4>
-            <h4 style="float: right">Mother : {{ parent.mother_name }}</h4><br>
+        <h4 style="float: right">Mother : {{ parent.mother_name }}</h4><br>
         <h4 style="clear: left">Mobile : {{ parent.mobile }}</h4>
-    </div><br>
-    <div>
+    </div>
+    <div style="margin: inherit" class="">
         {% if students|get_length > 1 %}
-        <div class="container main_table" id="buttons" style="margin-left: 55px">
-            {% for student in students %}
-                <button class="btn btn-success"
-                        id="button{{ forloop.counter }}"
-                        onclick="onClickOuter({{ forloop.counter }})">
-                    {{ student.name }}
-                </button>
+            <div class="container " id="buttons" style="padding-left: 0">
+                {% for student in students %}
+                    <button class="btn btn-success"
+                            id="button{{ forloop.counter }}"
+                            onclick="onClickOuter({{ forloop.counter }})">
+                        {{ student.name }}
+                    </button>
                 {% endfor %}
-        </div>
+            </div>
         {% endif %}
-        <div class="container" style="position: relative; margin-left: 55px">
+        <div style="clear: both">
             {% for student, examinfo in my_dict.items %}
                 <div class="
                     {% if forloop.counter0 == 0 %}
@@ -66,18 +66,19 @@
                         {% else %}
                             my_other_outer_container
                         {% endif %}
+                        main_table
                          "
                         id="div{{ forloop.counter }}">
-                    <div>
-                        <div class="container main_table">
+                    <div style="margin: auto" class="main_table">
+                        <div class="container main_table" style="padding-left: 0">
                             <h4 style="color: #204d74;text-align: center">Your ward Details</h4>
                             <h4 style="float: left">Name : {{ student.name }}</h4>
                             <h4 style="float: right">Roll No : {{ student.hall_ticket }}</h4>
-                            <h4 style="float: left">Branch : {{ student.branch }}</h4>
+                            <h4 style="clear: left; float: left">Branch : {{ student.branch }}</h4>
                             <h4 style="float: right">Gender: {{ student.gender }}</h4>
                         </div>
-                        <div >
-                            <div class="container" id="buttons" style="padding-left: 190px" >
+                        <div>
+                            <div class=" main_table" id="buttons" style="padding-left: 0" >
                                 {% for sem, ei in examinfo.items %}
                                     <button class="btn btn-success"
                                             id="button{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
@@ -93,8 +94,10 @@
                                     {% else %}
                                         my_yet_other_container
                                     {% endif %}
+                                    main_table
                                       "
-                                     id="div{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}">
+                                     id="div{{ forloop.parentloop.counter }}{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"
+                                style="margin-left: -15px">
 
                                     {% for e in ei %}
                                         <h4 style="text-align: center; color: #195f91">
@@ -108,58 +111,80 @@
                                              {% endif %}
                                             Exam held during {{ e.month_of_year }} / {{ e.year_of_calendar }}
                                         </h4><br/>
-                                        <table class="table table-hover table-responsive main_table">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Subject</th>
-                                                <th>Internal Marks</th>
-                                                <th>External Marks</th>
-                                                <th>Total</th>
-                                                <th>Result</th>
-                                                <th>Credits</th>
-                                            </tr>
-
-                                            {% for result in e.result.all %}
+                                        {% if student|get_batch == 0 %}
+                                            <table class="table table-hover table-responsive main_table">
                                                 <tr>
-                                                    <td>{{ forloop.counter }}</td>
-                                                    <td>{{ result.subject }}</td>
-                                                    <td>{{ result.internal_marks }}</td>
-                                                    <td>{{ result.external_marks }}</td>
-                                                    <td>{{ result.internal_marks|add:result.external_marks }}</td>
-                                                    <td>{{ result.results }}</td>
-                                                    <td>{{ result.credits }}</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
-                                        <h4 style="text-align: right;padding-right: 250px;color: #195f91">Total Marks: {{ e.total }}</h4>
-{#                                        {% if e.supple == False %}#}
-{#                                            <h4 id="div_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}" style="padding-left: 755px;color: #195f91">Percentage: </h4>#}
-{#                                            <label style="padding-left: 190px" for="total">Enter Total </label>#}
-{#                                            <input type="text" id="total">#}
-{#                                            <button id="id_total{{ ei.0.year_of_pursue }}{{ ei.0.semester }}"#}
-{#                                                    class="btn btn-primary"#}
-{#                                                    onclick="calcPercentage({{ e.total }}, {{ ei.0.year_of_pursue }}, {{ ei.0.semester }})">#}
-{#                                                    Calculate Percentage#}
-{#                                            </button>#}
-{#                                        {% endif %}#}
-                                        {% if e.supple == False and list_of_sem|get_item:student|get_item:key %}
-                                            <h3 style="padding-left: 170px;color: #204d74;">Achievements: </h3>
-                                            {% for ach in list_of_sem|get_item:student|get_item:key %}
-                                                <h4 style="padding-left: 170px;">Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester</h4><br>
-                                            {% endfor %}<br>
-                                            <h4 style="text-align: center; color: #195f91">Achievements desk</h4>
-                                            <table class="table table-hover table-responsive ach_table">
-                                                <tr>
-                                                    <th>Rank</th>
+                                                    <th>#</th>
                                                     <th>Subject</th>
+                                                    <th>Internal Marks</th>
+                                                    <th>External Marks</th>
+                                                    <th>Total</th>
+                                                    <th>Result</th>
+                                                    <th>Credits</th>
                                                 </tr>
-                                                {% for ach in list_of_subs|get_item:student|get_item:key %}
+
+                                                {% for result in e.result.all %}
                                                     <tr>
-                                                        <td>{{ ach.rank }}</td>
-                                                        <td>{{ ach.result.subject }}</td>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ result.subject }}</td>
+                                                        <td>{{ result.internal_marks }}</td>
+                                                        <td>{{ result.external_marks }}</td>
+                                                        <td>{{ result.internal_marks|add:result.external_marks }}</td>
+                                                        <td>{{ result.results }}</td>
+                                                        <td>{{ result.credits }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
+                                            <h4 style="text-align: right;color: #195f91">Total Marks: {{ e.total }}</h4>
+                                            {% if e.supple == False and list_of_sem|get_item:student|get_item:key %}
+                                                <h3 style="color: #204d74;">Achievements: </h3>
+                                                {% for ach in list_of_sem|get_item:student|get_item:key %}
+                                                    <h4 >Your ward {{ student.name }} has secured rank {{ ach.rank }} in this Semester</h4><br>
+                                                {% endfor %}<br>
+                                                <h4 style="text-align: center; color: #195f91">Achievements desk</h4>
+                                                <table class="table table-hover table-responsive ach_table">
+                                                    <tr>
+                                                        <th>Rank</th>
+                                                        <th>Subject</th>
+                                                    </tr>
+                                                    {% for ach in list_of_subs|get_item:student|get_item:key %}
+                                                        <tr>
+                                                            <td>{{ ach.rank }}</td>
+                                                            <td>{{ ach.result.subject }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            {% endif %}
+                                        {% else %}
+                                            <table class="table table-hover table-responsive main_table">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Subject</th>
+                                                    <th>Grade</th>
+                                                    <th>Status</th>
+                                                    <th>Credits</th>
+                                                </tr>
+                                                {% for result in e.result.all %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ result.subject }}</td>
+                                                        <td>{{ result.internal_marks }}</td>
+                                                        <td>{{ result.results }}</td>
+                                                        <td>{{ result.credits }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table><br>
+                                            <table class="table main_table table-bordered">
+                                                <tr>
+                                                    <td>SGPA</td>
+                                                    <td>{{ e.total }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>CGPA</td>
+                                                    <td>{{ student.cgpa }}</td>
+                                                </tr>
+                                            </table>
+
                                         {% endif %}
                                     {% endfor %}
                                 </div>

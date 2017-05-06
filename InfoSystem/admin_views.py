@@ -9,7 +9,7 @@ from django.urls.base import reverse
 from InfoSystem.forms import DocumentForm, ResultsForm
 from InfoSystem.models import Document, ExamInfo
 from insert_info import insert_info
-from insert_results import insert_results
+from insert_results import insert_results1, insert_results2
 
 
 def display_links(request):
@@ -29,6 +29,7 @@ def upload_info(request):
             # book = xlrd.open_workbook(new_doc.docfile.name)
             sheets = int(form.cleaned_data['sheets'])
             start = int(form.cleaned_data['start'])-1
+            # insert_info(new_doc, sheets, start)
             thread = threading.Thread(target=insert_info, args=(new_doc, sheets, start), kwargs={})
             thread.setDaemon(True)
             thread.start()
@@ -63,7 +64,14 @@ def upload_results(request):
             new_doc.save()
             sheets = int(form.cleaned_data['sheets'])
             start = int(form.cleaned_data['start'])-1
+            batch = int(form.cleaned_data['batch'])
+
+            # insert_results(new_doc, ei, sheets, start, batch)
             # book = xlrd.open_workbook(new_doc.docfile.name)
+            if batch == 0:
+                insert_results = insert_results1
+            else:
+                insert_results = insert_results2
             thread = threading.Thread(target=insert_results, args=(new_doc, ei, sheets, start), kwargs={})
             thread.setDaemon(True)
             thread.start()
