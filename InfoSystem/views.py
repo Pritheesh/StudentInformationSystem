@@ -1,13 +1,7 @@
-import hashlib
-import random
-import smtplib
 import base64
-# import threading
 import threading
 
 from collections import OrderedDict
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail.message import EmailMessage
@@ -15,7 +9,7 @@ from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.template.context_processors import csrf
 from django.template.defaulttags import register
-from django.urls.base import reverse, reverse_lazy
+from django.urls.base import reverse
 
 from InfoSystem.forms import UserRegistrationForm, UserLoginForm, VerificationForm, UserRegistrationForm2
 from InfoSystem.models import CustomUser, Student, Parent, SaltForActivation
@@ -173,14 +167,11 @@ def login2(request):
 
 #for email view
 def send_email(toaddr, id, user):
-    # toaddr=u"p.priteesh@gmail.com"
-    # salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
     email = toaddr
     if isinstance(email, unicode):
         email = email.encode('utf-8')
     salt_for_activation = SaltForActivation(user=user)
     salt_for_activation.save()
-    # activation_key = hashlib.sha1(salt+email).hexdigest()
     activation_key = base64.b64encode(email + str(id))
     text = """Hi %s!\nHow are you?\nHere is the link to activate your account: \
            \nhttp://127.0.0.1:8000/activation/?id=%s""" % (user.username, activation_key)

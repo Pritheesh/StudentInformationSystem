@@ -8,9 +8,6 @@ from django.urls.base import reverse
 from InfoSystem.forms import UserForm
 from InfoSystem.models import Parent
 
-def index(request):
-    return render(request, 'index.html')
-
 
 def register(request):
     form = UserForm(request.POST or None)

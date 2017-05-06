@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 
 import xlrd
-from InfoSystem.models import Parent, Student, Subject, Result, ExamInfo, Branch
+from InfoSystem.models import Parent, Student, Branch
 from MajorProject1 import settings
 import sys
 import os
@@ -50,8 +50,8 @@ def insert_info(doc, sheets, start):
                 print "Inserted details of parent - " + father_name
             except IntegrityError:
                 par = Parent.objects.get(mobile=father_mobile)
-            except Exception as e:
-                print e
+            except:
+                print sys.exc_info()
                 print "-------PROBLEM IN INSERTING PARENT INFO OF " + father_name+"-----------"
 
     # populate student table
@@ -85,6 +85,7 @@ def insert_info(doc, sheets, start):
                                parent=par, branch=branch)
                 stud.save()
             except:
+                print sys.exc_info()
                 print "---------THERE WAS PROBLEM INSERTING STUDENT DATA OF "+name+"------------"
             print "student: ", name
 

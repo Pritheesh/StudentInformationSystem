@@ -1,7 +1,5 @@
 import threading
 
-import xlrd
-from django.contrib.auth.decorators import user_passes_test
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls.base import reverse

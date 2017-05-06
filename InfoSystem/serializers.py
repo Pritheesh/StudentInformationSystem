@@ -1,10 +1,8 @@
-from django.contrib.auth.models import User
-from django.db import models
+
 from rest_framework import serializers
 
 from InfoSystem.models import Parent, Student, Result, Subject, CustomUser, ExamInfo, AchievementInASemester, \
     AchievementInASubject
-from django.utils.translation import ugettext as _
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
